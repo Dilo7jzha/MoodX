@@ -1,5 +1,6 @@
 <script setup>
 import Header from './components/Header.vue';
+import Login from './views/LoginView.vue';
 
 //import HelloWorld from './components/HelloWorld.vue'
 //import TheWelcome from './components/TheWelcome.vue'
@@ -11,7 +12,7 @@ import Header from './components/Header.vue';
   </header>
 
   <main>
-    
+    <Login />
   </main>
 </template>
 
