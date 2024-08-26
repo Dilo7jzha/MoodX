@@ -3,8 +3,8 @@ import { ref } from 'vue'
 // import { isAuthenticated } from '@/router';
 // import { useRouter } from 'vue-router';
 
-const email = 'user'
-const pwd = 'user'
+const email = 'email'
+const pwd = 'pwd'
 // const router = useRouter()
 
 const formData = ref({
