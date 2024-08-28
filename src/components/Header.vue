@@ -13,8 +13,8 @@
               Get help
             </router-link>
             <ul class="dropdown-menu" aria-labelledby="getHelpDropdown">
-              <li><a class="dropdown-item" href="#">Support resource</a></li>
-              <li><a class="dropdown-item" href="#">Book consultation</a></li>
+              <li><router-link to="/getHelp/supportResource" class="dropdown-item">Support resource</router-link></li>
+              <li><router-link to="/getHelp/bookConsultation" class="dropdown-item">Book Consultation</router-link></li>
             </ul>
           </li>
           <li class="nav-item"><a href="#" class="nav-link">Get involved</a></li>
