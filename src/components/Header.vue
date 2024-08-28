@@ -8,10 +8,10 @@
       <div class="nav-container d-flex justify-content-center flex-grow-1">
         <ul class="nav nav-pills">
           <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" id="getHelpDropdown" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
+            <router-link to="/getHelp" class="nav-link dropdown-toggle" id="getHelpDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
               Get help
-            </a>
+            </router-link>
             <ul class="dropdown-menu" aria-labelledby="getHelpDropdown">
               <li><a class="dropdown-item" href="#">Support resource</a></li>
               <li><a class="dropdown-item" href="#">Book consultation</a></li>
