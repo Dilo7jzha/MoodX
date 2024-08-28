@@ -3,6 +3,8 @@ import LoginView from '../views/LoginView.vue'
 import GetHelpView from '../views/GetHelpView.vue'
 import SupportResourceView from '../views/SupportResourceView.vue'
 import BookConsultationView from '../views/BookConsultationView.vue'
+import GetInvolvedView from '../views/GetInvolvedView.vue'
+import AboutUsView from '../views/AboutUsView.vue'
 
 const routes = [
   {
@@ -24,6 +26,16 @@ const routes = [
     path: '/getHelp/bookConsultation',
     name: 'Book Consultation',
     component: BookConsultationView
+  },
+  {
+    path: '/getInvolved',
+    name: 'Get Involved',
+    component: GetInvolvedView
+  },
+  {
+    path: '/aboutUs',
+    name: 'About Us',
+    component: AboutUsView
   }
 ]
 

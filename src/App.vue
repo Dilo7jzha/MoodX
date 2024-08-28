@@ -1,7 +1,5 @@
 <script setup>
 import Header from './components/Header.vue';
-import Login from './views/LoginView.vue';
-import GetSupport from './views/GetHelpView.vue'
 
 //import HelloWorld from './components/HelloWorld.vue'
 //import TheWelcome from './components/TheWelcome.vue'

@@ -17,8 +17,8 @@
               <li><router-link to="/getHelp/bookConsultation" class="dropdown-item">Book Consultation</router-link></li>
             </ul>
           </li>
-          <li class="nav-item"><a href="#" class="nav-link">Get involved</a></li>
-          <li class="nav-item"><a href="#" class="nav-link">About us</a></li>
+          <li class="nav-item"><router-link to="/getInvolved" class="nav-link">Get involved</router-link></li>
+          <li class="nav-item"><router-link to="/aboutUs" class="nav-link">About us</router-link></li>
         </ul>
       </div>
       <div class="profile nav-item dropdown">
