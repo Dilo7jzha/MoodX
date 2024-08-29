@@ -6,6 +6,7 @@ import BookConsultationView from '../views/BookConsultationView.vue'
 import GetInvolvedView from '../views/GetInvolvedView.vue'
 import AboutUsView from '../views/AboutUsView.vue'
 import ProfileView from '../views/ProfileView.vue'
+import RegisterView from '../views/RegisterView.vue'
 
 import {ref} from 'vue'
 
@@ -51,6 +52,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: LoginView
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: RegisterView
   }
 ]
 

@@ -53,7 +53,9 @@ const submitForm = () => {
                         <button type="submit" class="btn btn-primary me-2">Login</button>
                     </div>
                     <div class="row text-center">
-                        <p>Don't have an account?</p> <a href="#">Sign up now</a>
+                        <p>Don't have an account?</p> <router-link to="/register" type="button" class="btn btn-link"
+                            href="#">Sign up
+                            now</router-link>
                     </div>
                 </form>
             </div>
