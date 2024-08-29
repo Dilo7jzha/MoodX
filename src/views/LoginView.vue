@@ -33,29 +33,22 @@ const submitForm = () => {
                 </p>
                 <form @submit.prevent="submitForm">
                     <div class="row mb-3">
-                        <div class="row mb-3">
-                            <div class="col-md-6 col-sm-6 offset-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="text" class="form-control" id="email" v-model="formData.email"
-                                    placeholder="Enter your email address" />
-                            </div>
+                        <div class="col-md-6 col-sm-6 offset-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="text" class="form-control" id="email" v-model="formData.email"
+                                placeholder="Enter your email address" />
                         </div>
 
-                        <div class="row mb-3">
-                            <div class="col-md-6 col-sm-6 offset-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" v-model="formData.password"
-                                    placeholder="Enter your password" />
-                            </div>
+                        <div class="col-md-6 col-sm-6 offset-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" v-model="formData.password"
+                                placeholder="Enter your password" />
                         </div>
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary me-2">Login</button>
-                    </div>
-                    <div class="row text-center">
-                        <p>Don't have an account?</p> <router-link to="/register" type="button" class="btn btn-link"
-                            href="#">Sign up
-                            now</router-link>
+                        <button type="submit" class="btn btn-primary me-2 mb-3">Login</button>
+                        <p class="mb-3">Don't have an account?</p>
+                        <RouterLink to="/register" class="mb-3">Sign up now</RouterLink>
                     </div>
                 </form>
             </div>
