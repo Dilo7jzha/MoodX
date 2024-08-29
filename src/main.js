@@ -1,5 +1,6 @@
 // import './assets/main.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { RouterLink, RouterView } from 'vue-router'
 
 
 import { createApp } from 'vue'

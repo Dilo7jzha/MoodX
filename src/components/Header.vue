@@ -27,6 +27,7 @@
           <i class="fas fa-user-circle"></i>
         </a>
         <ul class="dropdown-menu" aria-labelledby="getHelpDropdown">
+          <li><router-link to="/profile" class="dropdown-item">Profile</router-link></li>
           <li><a class="dropdown-item" href="#">Login</a></li>
           <li><a class="dropdown-item" href="#">Logout</a></li>
         </ul>

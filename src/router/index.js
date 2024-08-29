@@ -5,6 +5,7 @@ import SupportResourceView from '../views/SupportResourceView.vue'
 import BookConsultationView from '../views/BookConsultationView.vue'
 import GetInvolvedView from '../views/GetInvolvedView.vue'
 import AboutUsView from '../views/AboutUsView.vue'
+import ProfileView from '../views/ProfileView.vue'
 
 const routes = [
   {
@@ -36,6 +37,11 @@ const routes = [
     path: '/aboutUs',
     name: 'About Us',
     component: AboutUsView
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: ProfileView
   }
 ]
 
