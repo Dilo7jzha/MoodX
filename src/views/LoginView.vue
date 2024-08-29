@@ -1,25 +1,25 @@
 <script setup>
 import { ref } from 'vue'
-// import { isAuthenticated } from '@/router';
-// import { useRouter } from 'vue-router';
+import { isAuthenticated } from '../router/index.js';
+import { useRouter } from 'vue-router';
 
 const email = 'email'
 const pwd = 'pwd'
-// const router = useRouter()
+const router = useRouter()
 
 const formData = ref({
     email: '',
     password: ''
 })
 
-// const submitForm = () => {
-//     if(formData.value.username === user && formData.value.password === pwd) {
-//         isAuthenticated.value = true
-//         router.push({name: 'About'}) //function of useRouter
-//     } else {
-//         alert("Error")
-//     }
-// }
+const submitForm = () => {
+    if (formData.value.email === email && formData.value.password === pwd) {
+        isAuthenticated.value = true
+        router.push({ name: 'Get Help' }) //function of useRouter
+    } else {
+        alert("Error")
+    }
+}
 </script>
 
 <template>

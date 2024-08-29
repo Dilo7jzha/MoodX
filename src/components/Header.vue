@@ -1,3 +1,13 @@
+<script setup>
+import { isAuthenticated } from '@/router';
+import { useRouter } from 'vue-router';
+const router = useRouter()
+const logout = () => {
+  isAuthenticated.value = false,
+    router.push({ name: 'Login' })
+}
+</script>
+
 <template>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <div class="container">
@@ -28,8 +38,8 @@
         </a>
         <ul class="dropdown-menu" aria-labelledby="getHelpDropdown">
           <li><router-link to="/profile" class="dropdown-item">Profile</router-link></li>
-          <li><a class="dropdown-item" href="#">Login</a></li>
-          <li><a class="dropdown-item" href="#">Logout</a></li>
+          <li><router-link to="/login" class="dropdown-item">Login</router-link></li>
+          <li><router-link to="/login" class="dropdown-item" @click="logout">Logout</router-link></li>
         </ul>
       </div>
     </header>

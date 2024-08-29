@@ -7,6 +7,10 @@ import GetInvolvedView from '../views/GetInvolvedView.vue'
 import AboutUsView from '../views/AboutUsView.vue'
 import ProfileView from '../views/ProfileView.vue'
 
+import {ref} from 'vue'
+
+const isAuthenticated = ref(false)
+
 const routes = [
   {
     path: '/',
@@ -42,6 +46,11 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: ProfileView
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: LoginView
   }
 ]
 
@@ -50,4 +59,5 @@ const router = createRouter({
   routes
 })
 
+export {isAuthenticated}
 export default router
