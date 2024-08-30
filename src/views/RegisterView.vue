@@ -1,15 +1,94 @@
+<script setup>
+
+import InputText from 'primevue/inputtext';
+import Password from 'primevue/password';
+import FloatLabel from 'primevue/floatlabel';
+import Divider from 'primevue/divider';
+
+import { ref } from 'vue'
+
+const formData = ref({
+    email: '',
+    password: ''
+})
+
+const clearForm = () => {
+    formData.value.email = '',
+        formData.value.password = ''
+}
+const submitForm = () => {
+    const email = formData.value.email;
+    const password = formData.value.password;
+    //get user info from local storage
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+    //identify if submited user email exists
+    const isExist = users.some(user => user.email === email)//return true if at least one matches, otherwise false
+    if (isExist) {
+        alert("The email has already been registered")
+        clearForm()
+    } else {
+        const role = email.toLowerCase().includes('admin') ? 'admin' : 'users'
+        users.push({
+            email: email,
+            password: password,
+            role: role
+        })
+        //store to local storage
+        localStorage.setItem('users', JSON.stringify(users))
+        alert("Success")
+        clearForm()
+    }
+}
+</script>
+
 <template>
-    <div class="row mt-5">
-        <div class="col-md-8 offset-md-2">
-            <h1 class="text-center">Sign up</h1>
-            <p>Sign up page</p>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h1 class="text-center logo">MoodX</h1>
+                <p class="text-center">
+                    Create your account
+                </p>
+                <form @submit.prevent="submitForm">
+                    <div class="row mb-3">
+                        <div class="col-md-9 col-sm-6 offset-3">
+                            <FloatLabel>
+                                <label for="email">Email</label>
+                                <InputText id="email" v-model="formData.email" />
+                            </FloatLabel>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-9 col-sm-6 offset-3">
+                            <FloatLabel>
+                                <Password v-model="formData.password" inputId="password">
+                                    <template #header>
+                                        <div class="font-semibold text-xm mb-4">Pick a password</div>
+                                    </template>
+                                    <template #footer>
+                                        <Divider />
+                                        <ul class="pl-2 ml-2 my-0 leading-normal">
+                                            <li>At least one lowercase</li>
+                                            <li>At least one uppercase</li>
+                                            <li>At least one numeric</li>
+                                            <li>Minimum 8 characters</li>
+                                        </ul>
+                                    </template>
+                                </Password>
+                                <label for="password">Password</label>
+                            </FloatLabel>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary me-2 mb-3">Sign Up</button>
+                        <p class="mb-3">Already have an account?</p>
+                        <RouterLink to="/register" class="mb-3">Login</RouterLink>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </template>
-
-<script setup>
-// No script needed for now
-</script>
 
 <style scoped>
 .container {
@@ -46,5 +125,12 @@
 
 .list-group-item {
     padding: 10px;
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: #000000;
 }
 </style>

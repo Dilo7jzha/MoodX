@@ -23,7 +23,6 @@ const submitForm = () => {
 </script>
 
 <template>
-    <!-- 🗄️ W3. Library Registration Form -->
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-8 offset-md-2">
@@ -38,7 +37,8 @@ const submitForm = () => {
                             <input type="text" class="form-control" id="email" v-model="formData.email"
                                 placeholder="Enter your email address" />
                         </div>
-
+                    </div>
+                    <div class="row mb-3">
                         <div class="col-md-6 col-sm-6 offset-3">
                             <label for="password" class="form-label">Password</label>
                             <input type="password" class="form-control" id="password" v-model="formData.password"

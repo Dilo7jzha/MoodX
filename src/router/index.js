@@ -7,6 +7,7 @@ import GetInvolvedView from '../views/GetInvolvedView.vue'
 import AboutUsView from '../views/AboutUsView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import RegisterView from '../views/RegisterView.vue'
+import HomeView from '../views/HomeView.vue'
 
 import {ref} from 'vue'
 
@@ -15,8 +16,8 @@ const isAuthenticated = ref(false)
 const routes = [
   {
     path: '/',
-    name: 'Login',
-    component: LoginView
+    name: 'Home',
+    component: HomeView
   },
   {
     path: '/getHelp',
