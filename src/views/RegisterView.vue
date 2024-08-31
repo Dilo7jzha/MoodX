@@ -4,17 +4,21 @@ import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
 import FloatLabel from 'primevue/floatlabel';
 import Divider from 'primevue/divider';
+import { useRouter } from 'vue-router';
+const router = useRouter()
 
 import { ref } from 'vue'
 
 const formData = ref({
     email: '',
-    password: ''
+    password: '',
 })
 
 const clearForm = () => {
-    formData.value.email = '',
-        formData.value.password = ''
+    formData.value = {
+        email: '',
+        password: '',
+    }
 }
 const submitForm = () => {
     const email = formData.value.email;
@@ -37,6 +41,7 @@ const submitForm = () => {
         localStorage.setItem('users', JSON.stringify(users))
         alert("Success")
         clearForm()
+        router.push({ name: 'Home' })
     }
 }
 </script>
@@ -82,7 +87,7 @@ const submitForm = () => {
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary me-2 mb-3">Sign Up</button>
                         <p class="mb-3">Already have an account?</p>
-                        <RouterLink to="/register" class="mb-3">Login</RouterLink>
+                        <RouterLink to="/login" class="mb-3">Login</RouterLink>
                     </div>
                 </form>
             </div>

@@ -13,11 +13,16 @@ const formData = ref({
 })
 
 const submitForm = () => {
-    if (formData.value.email === email && formData.value.password === pwd) {
-        isAuthenticated.value = true
-        router.push({ name: 'Get Help' }) //function of useRouter
+    const email = formData.value.email;
+    const password = formData.value.password;
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    //find the user who matches the email and password in local storage
+    const user = users.find(user => user.email === email && user.password === password);
+    //if user exists, login successful
+    if (user) {
+        alert("Success")
     } else {
-        alert("Error")
+        alert("Wrong email or password, please try again")
     }
 }
 </script>
