@@ -1,9 +1,4 @@
 <script setup>
-
-import InputText from 'primevue/inputtext';
-import Password from 'primevue/password';
-import FloatLabel from 'primevue/floatlabel';
-import Divider from 'primevue/divider';
 import { useRouter } from 'vue-router';
 const router = useRouter()
 import { role as identity } from '../router/index.js'; //there's already a role const in registration
@@ -60,38 +55,21 @@ const submitForm = () => {
                 </p>
                 <form @submit.prevent="submitForm">
                     <div class="row mb-3">
-                        <div class="col-md-9 col-sm-6 offset-3">
-                            <FloatLabel>
-                                <label for="email">Email</label>
-                                <InputText id="email" v-model="formData.email" />
-                            </FloatLabel>
+                        <div class="col-md-6 col-sm-6 offset-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" v-model="formData.email" />
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-md-9 col-sm-6 offset-3">
-                            <FloatLabel>
-                                <Password v-model="formData.password" inputId="password">
-                                    <template #header>
-                                        <div class="font-semibold text-xm mb-4">Pick a password</div>
-                                    </template>
-                                    <template #footer>
-                                        <Divider />
-                                        <ul class="pl-2 ml-2 my-0 leading-normal">
-                                            <li>At least one lowercase</li>
-                                            <li>At least one uppercase</li>
-                                            <li>At least one numeric</li>
-                                            <li>Minimum 8 characters</li>
-                                        </ul>
-                                    </template>
-                                </Password>
-                                <label for="password">Password</label>
-                            </FloatLabel>
+                        <div class="col-md-6 col-sm-6 offset-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" v-model="formData.password" />
                         </div>
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary me-2 mb-3">Sign Up</button>
                         <p class="mb-3">Already have an account?</p>
-                        <RouterLink to="/login" class="mb-3">Login</RouterLink>
+                        <router-link to="/login" class="mb-3">Login</router-link>
                     </div>
                 </form>
             </div>
