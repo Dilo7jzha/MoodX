@@ -3,18 +3,23 @@ import { useRouter } from 'vue-router';
 const router = useRouter()
 import { role as identity } from '../router/index.js'; //there's already a role const in registration
 import { isAuthenticated } from '../router/index.js';
+import DatePicker from 'primevue/datepicker';
 
 import { ref } from 'vue'
 
 const formData = ref({
     email: '',
+    username: '',
     password: '',
+    birth: null,
 })
 
 const clearForm = () => {
     formData.value = {
         email: '',
+        username: '',
         password: '',
+        birth: null,
     }
 }
 const submitForm = () => {
@@ -55,19 +60,39 @@ const submitForm = () => {
                 </p>
                 <form @submit.prevent="submitForm">
                     <div class="row mb-3">
-                        <div class="col-md-6 col-sm-6 offset-3">
+                        <div class="col-md-6 col-sm-6 col-6">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" v-model="formData.email" />
+                            <input type="email" class="form-control" id="email" placeholder="Enter your email address"
+                                v-model="formData.email" />
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-6">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" placeholder="Enter your username"
+                                v-model="formData.username" />
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-md-6 col-sm-6 offset-3">
+                        <div class="col-md-6 col-sm-6 col-6">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" v-model="formData.password" />
+                            <input type="password" class="form-control" id="password" placeholder="Enter your password"
+                                v-model="formData.password" />
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-6">
+                            <label for="confirm-password" class="form-label">Confirm password</label>
+                            <input type="password" class="form-control" id="confirm-password"
+                                placeholder="Confirm your password" v-model="formData.confirmPassword" />
+                        </div>
+                    </div>
+                    <div class="row mb-3 justify-content-center">
+                        <div class="col-md-6 col-sm-6 col-6">
+                            <label for="birth" class="form-label">Date of birth</label>
+                            <input type="date" class="form-control" v-model="formData.dateOfBirth" dateFormat="dd/mm/yy"
+                                id="birth" />
                         </div>
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary me-2 mb-3">Sign Up</button>
+                        <button type="button" class="btn btn-secondary me-2 mb-3" @click="clearForm">Clear</button>
                         <p class="mb-3">Already have an account?</p>
                         <router-link to="/login" class="mb-3">Login</router-link>
                     </div>
