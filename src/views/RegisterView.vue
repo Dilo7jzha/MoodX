@@ -116,62 +116,64 @@ const validateEmail = (blur) => {
 </script>
 
 <template>
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <h1 class="text-center logo">MoodX</h1>
-                <p class="text-center">
-                    Create your account
-                </p>
-                <form @submit.prevent="submitForm">
-                    <div class="row mb-3">
-                        <div class="col-md-6 col-sm-6 col-6">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="Enter your email address"
-                                @blur="() => validateEmail(true)" @input="() => validateEmail(false)"
-                                v-model="formData.email" />
-                            <div v-if="errors.email" class="text-danger">{{ errors.email }}</div>
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-6">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" placeholder="Enter your username"
-                                @blur="() => validateName(true)" @input="() => validateName(false)"
-                                v-model="formData.username" />
-                            <div v-if="errors.username" class="text-danger">{{ errors.username }}</div>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-6 col-sm-6 col-6">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="Enter your password"
-                                @blur="() => validatePassword(true)" @input="() => validatePassword(false)"
-                                v-model="formData.password" />
-                            <div v-if="errors.password" class="text-danger">{{ errors.password }}</div>
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-6">
-                            <label for="confirm-password" class="form-label">Confirm password</label>
-                            <input type="password" class="form-control" id="confirm-password"
-                                placeholder="Confirm your password" @blur="() => validateConfirmPassword(true)"
-                                v-model="formData.confirmPassword" />
-                            <div v-if="errors.confirmPassword" class="text-danger">
-                                {{ errors.confirmPassword }}
+    <div class="auth-page">
+        <div class="container mt-5 auth-card">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <h1 class="text-center logo">MoodX</h1>
+                    <p class="text-center">
+                        Create your account
+                    </p>
+                    <form @submit.prevent="submitForm">
+                        <div class="row mb-3">
+                            <div class="col-md-6 col-sm-6 col-6">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email"
+                                    placeholder="Enter your email address" @blur="() => validateEmail(true)"
+                                    @input="() => validateEmail(false)" v-model="formData.email" />
+                                <div v-if="errors.email" class="text-danger">{{ errors.email }}</div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-6">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="username" placeholder="Enter your username"
+                                    @blur="() => validateName(true)" @input="() => validateName(false)"
+                                    v-model="formData.username" />
+                                <div v-if="errors.username" class="text-danger">{{ errors.username }}</div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mb-3 justify-content-center">
-                        <div class="col-md-6 col-sm-6 col-6">
-                            <label for="birth" class="form-label">Date of birth (optional)</label>
-                            <DatePicker v-model="formData.birth" showIcon fluid :showOnFocus="false" inputId="birth"
-                                placeholder="dd/mm/yyyy" dateFormat="dd/mm/yy" />
+                        <div class="row mb-3">
+                            <div class="col-md-6 col-sm-6 col-6">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password"
+                                    placeholder="Enter your password" @blur="() => validatePassword(true)"
+                                    @input="() => validatePassword(false)" v-model="formData.password" />
+                                <div v-if="errors.password" class="text-danger">{{ errors.password }}</div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-6">
+                                <label for="confirm-password" class="form-label">Confirm password</label>
+                                <input type="password" class="form-control" id="confirm-password"
+                                    placeholder="Confirm your password" @blur="() => validateConfirmPassword(true)"
+                                    v-model="formData.confirmPassword" />
+                                <div v-if="errors.confirmPassword" class="text-danger">
+                                    {{ errors.confirmPassword }}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary me-2 mb-3">Sign Up</button>
-                        <button type="button" class="btn btn-secondary me-2 mb-3" @click="clearForm">Clear</button>
-                        <p class="mb-3">Already have an account?</p>
-                        <router-link to="/login" class="mb-3">Login</router-link>
-                    </div>
-                </form>
+                        <div class="row mb-3 justify-content-center">
+                            <div class="col-md-6 col-sm-6 col-6">
+                                <label for="birth" class="form-label">Date of birth (optional)</label>
+                                <DatePicker v-model="formData.birth" showIcon fluid :showOnFocus="false" inputId="birth"
+                                    placeholder="dd/mm/yyyy" dateFormat="dd/mm/yy" />
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary me-2 mb-3">Sign Up</button>
+                            <button type="button" class="btn btn-secondary me-2 mb-3" @click="clearForm">Clear</button>
+                            <p class="mb-3">Already have an account?</p>
+                            <router-link to="/login" class="mb-3">Login</router-link>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

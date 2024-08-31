@@ -1,0 +1,10 @@
+.auth-page {
+  background-image: url(/src/assets/img/login-bg.png);
+  min-height: 400px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.auth-card {
+  background-color: rgba(255, 255, 255, 0.8);
+}

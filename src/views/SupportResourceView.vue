@@ -27,11 +27,10 @@ const router = useRouter()
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 600px;
     background-image: url(/src/assets/img/background.png);
     background-color: #f5f7fa;
     /* Used if the image is unavailable */
-    height: 1000px;
     /* You must set a specified height */
     background-position: center;
     /* Center the image */

@@ -10,14 +10,13 @@
                     <div class="overall-rating">
                         <h4>Overall Rating</h4>
                         <p-rating :value="computedAverageRating" :readonly="true" :stars="5" :cancel="false"></p-rating>
-                        <p>{{ computedAverageRating.toFixed(2) }} out of 5 ({{ totalRatings }} ratings)</p>
+                        <p>{{ computedAverageRating.toFixed(2) }}/5 ({{ totalRatings }} ratings)</p>
                     </div>
 
                     <div class="provide-rating">
                         <h3>Ratings and reviews</h3>
                         <p-rating v-model="userRating" :cancel="false"></p-rating>
                         <button @click="submitRating" :disabled="!userRating">Submit Rating</button>
-                        <p v-if="ratingSubmitted">Thank you for your feedback!</p>
                     </div>
                 </div>
             </div>
@@ -120,6 +119,7 @@ export default {
                 this.totalRatingSum += this.userRating;
                 this.totalRatings += 1;
                 this.ratingSubmitted = true;
+                alert("Thanks for your rating!")
             }
         }
     }
@@ -182,10 +182,11 @@ h1 {
 }
 
 .image-box {
-    width: 250px;
-    height: 250px;
+    width: 100%;
+    height: 100%;
     background-image: url(/src/assets/img/stressed.png);
     background-size: 100%;
+    background-repeat: no-repeat;
 }
 
 .content-section {
