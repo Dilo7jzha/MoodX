@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { isAuthenticated } from '../router/index.js';
+import { role } from '../router/index.js';
 import { useRouter } from 'vue-router';
 
 const email = 'email'
@@ -21,6 +22,9 @@ const submitForm = () => {
     //if user exists, login successful
     if (user) {
         alert("Success")
+        isAuthenticated.value = true
+        role.value = user.role
+        router.push({ name: 'Home' })
     } else {
         alert("Wrong email or password, please try again")
     }

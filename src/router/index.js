@@ -8,10 +8,12 @@ import AboutUsView from '../views/AboutUsView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import HomeView from '../views/HomeView.vue'
+import AdminDashboardView from '../views/AdminDashboardView.vue'
 
 import {ref} from 'vue'
 
 const isAuthenticated = ref(false)
+const role = ref('')
 
 const routes = [
   {
@@ -58,6 +60,11 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: RegisterView
+  },
+  {
+    path: '/adminDashboard',
+    name: 'adminDashboard',
+    component: AdminDashboardView
   }
 ]
 
@@ -68,3 +75,4 @@ const router = createRouter({
 
 export {isAuthenticated}
 export default router
+export {role}

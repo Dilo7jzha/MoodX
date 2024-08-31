@@ -1,9 +1,11 @@
 <script setup>
-import { isAuthenticated } from '@/router';
+import { isAuthenticated } from '../router/index.js';
 import { useRouter } from 'vue-router';
+import { role } from '../router/index.js';
 const router = useRouter()
 const logout = () => {
   isAuthenticated.value = false,
+    role.value = '',
     router.push({ name: 'Login' })
 }
 </script>
@@ -29,6 +31,8 @@ const logout = () => {
           </li>
           <li class="nav-item"><router-link to="/getInvolved" class="nav-link">Get involved</router-link></li>
           <li class="nav-item"><router-link to="/aboutUs" class="nav-link">About us</router-link></li>
+          <li class="nav-item" v-if="(role === 'admin')"><router-link to="/adminDashboard" class="nav-link">Admin
+              dashboard</router-link></li>
         </ul>
       </div>
       <div class="profile nav-item dropdown">
@@ -38,7 +42,8 @@ const logout = () => {
         </a>
         <ul class="dropdown-menu" aria-labelledby="getHelpDropdown">
           <li><router-link to="/profile" class="dropdown-item">Profile</router-link></li>
-          <li><router-link to="/login" class="dropdown-item">Login</router-link></li>
+          <li v-if="!isAuthenticated"><router-link to="/login" class="dropdown-item">Login</router-link></li>
+          <li v-else><router-link to="/login" class="dropdown-item disabled">Login</router-link></li>
           <li><router-link to="/login" class="dropdown-item" @click="logout">Logout</router-link></li>
         </ul>
       </div>

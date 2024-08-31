@@ -6,6 +6,8 @@ import FloatLabel from 'primevue/floatlabel';
 import Divider from 'primevue/divider';
 import { useRouter } from 'vue-router';
 const router = useRouter()
+import { role as identity } from '../router/index.js'; //there's already a role const in registration
+import { isAuthenticated } from '../router/index.js';
 
 import { ref } from 'vue'
 
@@ -41,6 +43,8 @@ const submitForm = () => {
         localStorage.setItem('users', JSON.stringify(users))
         alert("Success")
         clearForm()
+        isAuthenticated.value = true
+        identity.value = role
         router.push({ name: 'Home' })
     }
 }
