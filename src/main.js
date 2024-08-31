@@ -9,6 +9,8 @@ import router from './router'
 
 import PrimeVue from 'primevue/config'
 import Aura from '@primevue/themes/aura'
+
+import 'primeicons/primeicons.css';
 // import DataTable from 'primevue/datatable'
 // import Column from 'primevue/Column'
 
