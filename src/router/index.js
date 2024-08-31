@@ -9,6 +9,9 @@ import ProfileView from '../views/ProfileView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import HomeView from '../views/HomeView.vue'
 import AdminDashboardView from '../views/AdminDashboardView.vue'
+import FeelingStressedView from '../views/resources/FeelingStressedView.vue'
+import FeelingLowView from '../views/resources/FeelingLowView.vue'
+import ExperiencedTraumaView from '../views/resources/ExperiencedTrauma.vue'
 
 import {ref} from 'vue'
 
@@ -65,6 +68,21 @@ const routes = [
     path: '/adminDashboard',
     name: 'adminDashboard',
     component: AdminDashboardView
+  },
+  {
+    path: '/getHelp/supportResource/feelingStressed',
+    name: 'Feeling Stressed',
+    component: FeelingStressedView
+  },
+  {
+    path: '/getHelp/supportResource/feelingLow',
+    name: 'Feeling Low',
+    component: FeelingLowView
+  },
+  {
+    path: '/getHelp/supportResource/experiencedTrauma',
+    name: 'Experienced Trauma',
+    component: ExperiencedTraumaView
   }
 ]
 

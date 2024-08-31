@@ -1,50 +1,85 @@
 <template>
-    <div class="row mt-5">
-        <div class="col-md-8 offset-md-2">
-            <h1 class="text-center">Support Resource</h1>
-            <p>Support Resource page</p>
+    <div class="support-container">
+        <div class="support-content mb-3">
+            <h1>What's on your mind today?</h1>
+            <p>Tell us what's on your mind, and we'll show you ways to help.</p>
+            <p>You can select more than one.</p>
+
+            <div class="support-options">
+                <router-link to="/getHelp/supportResource/feelingStressed" class="support-button">I'm feeling stressed
+                    or anxious</router-link>
+                <router-link to="/getHelp/supportResource/feelingLow" class="support-button">I'm feeling low
+                    or down</router-link>
+                <router-link to="/getHelp/supportResource/experiencedTrauma" class="support-button">I have experienced
+                    trauma</router-link>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
-// No script needed for now
+import { useRouter } from 'vue-router';
+const router = useRouter()
 </script>
 
 <style scoped>
-.container {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    max-width: 80vw;
-    margin: 0 auto;
-    padding: 20px;
-    /* background-color: #e0bfbf; */
-    border-radius: 10px;
+.support-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url(/src/assets/img/background.png);
+    background-color: #f5f7fa;
+    /* Used if the image is unavailable */
+    height: 1000px;
+    /* You must set a specified height */
+    background-position: center;
+    /* Center the image */
+    background-repeat: no-repeat;
+    /* Do not repeat the image */
+    background-size: cover;
+    /* Resize the background image to cover the entire container */
 }
 
-/* Class selectors */
-.form {
-    text-align: center;
-    margin-top: 50px;
-}
-
-/* ID selectors */
-#username:focus,
-#password:focus,
-#isAustralian:focus,
-.card {
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.card-header {
-    background-color: #275fda;
+.support-content {
+    background-color: #003366;
+    /* Dark blue background */
     color: white;
-    padding: 10px;
-    border-radius: 10px 10px 0 0;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    width: 600px;
 }
 
-.list-group-item {
-    padding: 10px;
+h1 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+p {
+    margin: 10px 0;
+}
+
+.support-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.support-button {
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.support-button:hover {
+    background-color: white;
+    color: #003366;
 }
 </style>

@@ -1,4 +1,5 @@
 <script setup>
+import Footer from './components/Footer.vue';
 import Header from './components/Header.vue';
 
 //import HelloWorld from './components/HelloWorld.vue'
@@ -14,6 +15,10 @@ import Header from './components/Header.vue';
     <!-- <Login /> -->
     <router-view></router-view>
   </main>
+
+  <footer>
+    <Footer />
+  </footer>
 </template>
 
 <style scoped>
