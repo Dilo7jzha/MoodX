@@ -24,10 +24,30 @@ const clearForm = () => {
         birth: '',
     }
 }
+
+const sanitizeInput = (input) => {
+    // XSS prevention by replacing special characters with hex code
+    return input.replace(/[&<>"'/]/g, (char) => {
+        const charMap = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;',
+            '/': '&#x2F;',
+        };
+        return charMap[char] || char;
+    });
+};
+
 const submitForm = () => {
     validateName(true)
     validatePassword(true)
     validateEmail(true)
+
+    formData.value.email = sanitizeInput(formData.value.email);
+    formData.value.username = sanitizeInput(formData.value.username);
+    formData.value.password = sanitizeInput(formData.value.password);
     if (!errors.value.username && !errors.value.password && !errors.value.email) {
         const email = formData.value.email;
         const username = formData.value.username;

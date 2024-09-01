@@ -4,8 +4,6 @@ import { isAuthenticated } from '../router/index.js';
 import { role } from '../router/index.js';
 import { useRouter } from 'vue-router';
 
-const email = 'email'
-const pwd = 'pwd'
 const router = useRouter()
 
 const formData = ref({
@@ -13,7 +11,25 @@ const formData = ref({
     password: ''
 })
 
+const sanitizeInput = (input) => {
+    // XSS prevention by replacing special characters with hex code
+    return input.replace(/[&<>"'/]/g, (char) => {
+        const charMap = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;',
+            '/': '&#x2F;',
+        };
+        return charMap[char] || char;
+    });
+};
+
+
 const submitForm = () => {
+    formData.value.email = sanitizeInput(formData.value.email);
+    formData.value.password = sanitizeInput(formData.value.password);
     const email = formData.value.email;
     const password = formData.value.password;
     const users = JSON.parse(localStorage.getItem('users')) || [];

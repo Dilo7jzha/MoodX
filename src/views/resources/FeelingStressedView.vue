@@ -9,13 +9,13 @@
                 <div class="rating-summary">
                     <div class="overall-rating">
                         <h4>Overall Rating</h4>
-                        <p-rating :value="computedAverageRating" :readonly="true" :stars="5" :cancel="false"></p-rating>
+                        <Rating :value="computedAverageRating" :readonly="true" :stars="5" :cancel="false"></Rating>
                         <p>{{ computedAverageRating.toFixed(2) }}/5 ({{ totalRatings }} ratings)</p>
                     </div>
 
                     <div class="provide-rating">
                         <h3>Ratings and reviews</h3>
-                        <p-rating v-model="userRating" :cancel="false"></p-rating>
+                        <Rating v-model="userRating" :cancel="false"></Rating>
                         <button @click="submitRating" :disabled="!userRating">Submit Rating</button>
                     </div>
                 </div>
@@ -93,35 +93,33 @@
     </div>
 </template>
 
-<script>
+<script setup>
+import { ref, computed } from 'vue';
 import Rating from 'primevue/rating';
 
-export default {
-    components: {
-        'p-rating': Rating
-    },
-    data() {
-        return {
-            userRating: null,
-            totalRatings: 20,
-            totalRatingSum: 4.2 * 20,
-            ratingSubmitted: false
-        };
-    },
-    computed: {
-        computedAverageRating() {
-            return this.totalRatings ? this.totalRatingSum / this.totalRatings : 0;
-        }
-    },
-    methods: {
-        submitRating() {
-            if (this.userRating !== null) {
-                this.totalRatingSum += this.userRating;
-                this.totalRatings += 1;
-                this.ratingSubmitted = true;
-                alert("Thanks for your rating!")
-            }
-        }
+// Define variables
+const userRating = ref(null); // The user's selected rating
+const totalRatings = ref(20); // Initial total ratings count
+const totalRatingSum = ref(4.2 * 20); // Initial sum of all ratings (averageRating * totalRatings)
+const ratingSubmitted = ref(false); // Flag to show the thank you message
+
+// Computed property for average rating
+const computedAverageRating = computed(() => {
+    return totalRatings.value ? totalRatingSum.value / totalRatings.value : 0;
+});
+
+// Function to submit the rating
+const submitRating = () => {
+    if (userRating.value !== null) {
+        // Update the total sum of all ratings
+        totalRatingSum.value += userRating.value;
+
+        // Increment total ratings count
+        totalRatings.value += 1;
+
+        // Mark as submitted to show the thank you message
+        ratingSubmitted.value = true;
+        alert('Thanks for your rating!')
     }
 };
 </script>
