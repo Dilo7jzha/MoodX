@@ -31,19 +31,13 @@ const router = useRouter()
     height: 600px;
     background-image: url(/src/assets/img/background.png);
     background-color: #f5f7fa;
-    /* Used if the image is unavailable */
-    /* You must set a specified height */
     background-position: center;
-    /* Center the image */
     background-repeat: no-repeat;
-    /* Do not repeat the image */
     background-size: cover;
-    /* Resize the background image to cover the entire container */
 }
 
 .support-content {
     background-color: #003366;
-    /* Dark blue background */
     color: white;
     padding: 30px;
     border-radius: 20px;
