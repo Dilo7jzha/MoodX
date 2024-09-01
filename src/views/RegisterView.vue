@@ -41,6 +41,7 @@ const sanitizeInput = (input) => {
 };
 
 const submitForm = () => {
+
     validateName(true)
     validatePassword(true)
     validateEmail(true)
@@ -61,7 +62,7 @@ const submitForm = () => {
             alert("The email has already been registered")
             clearForm()
         } else {
-            const role = email.toLowerCase().includes('admin') ? 'admin' : 'users'
+            const role = email.toLowerCase() === 'admin@moodx.com' ? 'admin' : 'user';
             users.push({
                 email: email,
                 username: username,

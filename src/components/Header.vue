@@ -44,7 +44,9 @@ const logout = () => {
           <li><router-link to="/profile" class="dropdown-item">Profile</router-link></li>
           <li v-if="!isAuthenticated"><router-link to="/login" class="dropdown-item">Login</router-link></li>
           <li v-else><router-link to="/login" class="dropdown-item disabled">Login</router-link></li>
-          <li><router-link to="/login" class="dropdown-item" @click="logout">Logout</router-link></li>
+          <li v-if="isAuthenticated"><router-link to="/login" class="dropdown-item" @click="logout">Logout</router-link>
+          </li>
+          <li v-else><router-link to="/login" class="dropdown-item disabled" @click="logout">Logout</router-link></li>
         </ul>
       </div>
     </header>
@@ -103,11 +105,9 @@ const logout = () => {
   flex-grow: 1;
 }
 
-/* Custom styling to ensure dropdown opens on hover */
 .nav-item.dropdown:hover .dropdown-menu {
   display: block;
   margin-top: 0;
-  /* Adjust as necessary to avoid gap */
 }
 
 /* Profile icon styling */
