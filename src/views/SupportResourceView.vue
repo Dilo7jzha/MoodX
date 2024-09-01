@@ -1,6 +1,7 @@
 <template>
     <div class="support-container">
         <div class="support-content mb-3">
+            <h1>Support resources</h1>
             <h1>What's on your mind today?</h1>
             <p>Tell us what's on your mind, and we'll show you ways to help.</p>
             <p>You can select more than one.</p>
