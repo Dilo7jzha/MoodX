@@ -72,7 +72,7 @@ const submitForm = () => {
             })
             //store to local storage
             localStorage.setItem('users', JSON.stringify(users))
-            alert("Success")
+            alert("Sign up successful")
             clearForm()
             isAuthenticated.value = true
             identity.value = role

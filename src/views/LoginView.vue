@@ -37,7 +37,7 @@ const submitForm = () => {
     const user = users.find(user => user.email === email && user.password === password);
     //if user exists, login successful
     if (user) {
-        alert("Success")
+        alert("Login successful")
         isAuthenticated.value = true
         role.value = user.role
         router.push({ name: 'Home' })
