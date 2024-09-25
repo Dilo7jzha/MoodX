@@ -12,8 +12,6 @@ import AdminDashboardView from '../views/AdminDashboardView.vue'
 import FeelingStressedView from '../views/resources/FeelingStressedView.vue'
 import FeelingLowView from '../views/resources/FeelingLowView.vue'
 import ExperiencedTraumaView from '../views/resources/ExperiencedTrauma.vue'
-import FirebaseRegisterView from '../views/FirebaseRegisterView.vue'
-import FirebaseLoginView from '../views/FirebaseLoginView.vue'
 
 import {ref} from 'vue'
 
@@ -85,16 +83,6 @@ const routes = [
     path: '/getHelp/supportResource/experiencedTrauma',
     name: 'Experienced Trauma',
     component: ExperiencedTraumaView
-  },
-  {
-    path: '/firebaseRegister',
-    name: 'Firebase Register',
-    component: FirebaseRegisterView
-  },
-  {
-    path: '/firebaseLogin',
-    name: 'Firebase Login',
-    component: FirebaseLoginView
   }
 ]
 
