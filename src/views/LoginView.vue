@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { isAuthenticated } from '../router/index.js';
 import { role } from '../router/index.js';
 import { useRouter } from 'vue-router';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
 
 const router = useRouter()
 
@@ -26,25 +27,36 @@ const sanitizeInput = (input) => {
     });
 };
 
-
 const submitForm = () => {
     formData.value.email = sanitizeInput(formData.value.email);
     formData.value.password = sanitizeInput(formData.value.password);
-    const email = formData.value.email;
+    const email = formData.value.email; // These are plain strings now
     const password = formData.value.password;
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    //find the user who matches the email and password in local storage
-    const user = users.find(user => user.email === email && user.password === password);
-    //if user exists, login successful
-    if (user) {
-        alert("Login successful")
-        isAuthenticated.value = true
-        role.value = user.role
-        router.push({ name: 'Home' })
-    } else {
-        alert("Wrong email or password, please try again")
+
+    if (!email || !password) {
+        alert("Email and password cannot be empty.");
+        return;
     }
-}
+
+    signInWithEmailAndPassword(getAuth(), email, password)
+        .then((data) => {
+            alert("Login successful");
+            isAuthenticated.value = true;
+            router.push({ name: 'Home' });
+        })
+        .catch((error) => {
+            switch (error.code) {
+                case 'auth/invalid-email':
+                    alert("Invalid email format. Please try again.");
+                    break;
+                case 'auth/network-request-failed':
+                    alert("Network error. Please check your internet connection and try again.");
+                    break;
+                default:
+                    alert("Login failed. Please try again.");
+            }
+        });
+};
 </script>
 
 <template>
