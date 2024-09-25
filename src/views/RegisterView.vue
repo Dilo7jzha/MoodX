@@ -4,6 +4,11 @@ const router = useRouter()
 import { role as identity } from '../router/index.js'; //there's already a role const in registration
 import { isAuthenticated } from '../router/index.js';
 import DatePicker from 'primevue/datepicker';
+import { doc, setDoc } from "firebase/firestore";
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import db from "../Firebase/init";
+
+const auth = getAuth();
 
 import { ref } from 'vue'
 
@@ -40,46 +45,71 @@ const sanitizeInput = (input) => {
     });
 };
 
-const submitForm = () => {
-
-    validateName(true)
-    validatePassword(true)
-    validateEmail(true)
+const submitForm = async () => {
+    validateName(true);
+    validatePassword(true);
+    validateEmail(true);
 
     formData.value.email = sanitizeInput(formData.value.email);
     formData.value.username = sanitizeInput(formData.value.username);
     formData.value.password = sanitizeInput(formData.value.password);
+
     if (!errors.value.username && !errors.value.password && !errors.value.email) {
         const email = formData.value.email;
         const username = formData.value.username;
         const password = formData.value.password;
         const birth = formData.value.birth;
-        //get user info from local storage
-        let users = JSON.parse(localStorage.getItem('users')) || [];
-        //identify if submited user email exists
-        const isExist = users.some(user => user.email === email)//return true if at least one matches, otherwise false
-        if (isExist) {
-            alert("The email has already been registered")
-            clearForm()
-        } else {
+
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+
+            // Update the user's displayName with the username
+            await updateProfile(user, {
+                displayName: username
+            });
+
             const role = email.toLowerCase() === 'admin@moodx.com' ? 'admin' : 'user';
-            users.push({
+
+            // Save additional user data in Firestore
+            await setDoc(doc(db, "users", user.uid), {
                 email: email,
                 username: username,
                 birth: birth,
-                password: password,
                 role: role,
-            })
-            //store to local storage
-            localStorage.setItem('users', JSON.stringify(users))
-            alert("Sign up successful")
-            clearForm()
-            isAuthenticated.value = true
-            identity.value = role
-            router.push({ name: 'Home' })
+                createdAt: new Date()
+            });
+
+            alert("Sign up successful");
+            clearForm();
+            isAuthenticated.value = true;
+            identity.value = role;
+
+            // Redirect based on user role
+            if (role === 'admin') {
+                router.push({ name: 'Admin Dashboard' });
+            } else {
+                router.push({ name: 'Home' });
+            }
+
+        } catch (error) {
+            switch (error.code) {
+                case 'auth/email-already-in-use':
+                    alert("The email has already been registered");
+                    break;
+                case 'auth/weak-password':
+                    alert("The password is too weak. Please use a stronger password.");
+                    break;
+                case 'auth/invalid-email':
+                    alert("The email address is invalid.");
+                    break;
+                default:
+                    alert("An error occurred during registration. Please try again.");
+            }
         }
     }
-}
+};
+
 const errors = ref({
     email: null,
     username: null,

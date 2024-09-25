@@ -4,6 +4,8 @@ import { isAuthenticated } from '../router/index.js';
 import { role } from '../router/index.js';
 import { useRouter } from 'vue-router';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
+import db from "../Firebase/init";
+import { doc, getDoc } from "firebase/firestore";
 
 const router = useRouter()
 
@@ -27,10 +29,10 @@ const sanitizeInput = (input) => {
     });
 };
 
-const submitForm = () => {
+const submitForm = async () => {
     formData.value.email = sanitizeInput(formData.value.email);
     formData.value.password = sanitizeInput(formData.value.password);
-    const email = formData.value.email; // These are plain strings now
+    const email = formData.value.email;
     const password = formData.value.password;
 
     if (!email || !password) {
@@ -38,24 +40,41 @@ const submitForm = () => {
         return;
     }
 
-    signInWithEmailAndPassword(getAuth(), email, password)
-        .then((data) => {
-            alert("Login successful");
-            isAuthenticated.value = true;
-            router.push({ name: 'Home' });
-        })
-        .catch((error) => {
-            switch (error.code) {
-                case 'auth/invalid-email':
-                    alert("Invalid email format. Please try again.");
-                    break;
-                case 'auth/network-request-failed':
-                    alert("Network error. Please check your internet connection and try again.");
-                    break;
-                default:
-                    alert("Login failed. Please try again.");
+    try {
+        const data = await signInWithEmailAndPassword(getAuth(), email, password);
+        const user = data.user;
+        alert("Login successful");
+        isAuthenticated.value = true;
+
+        // Retrieve the user's role from Firestore, using user's uid
+        const userDocRef = doc(db, "users", user.uid);
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (userDocSnap.exists()) {
+            const userData = userDocSnap.data();
+            role.value = userData.role;
+
+            // Redirect based on role
+            if (role.value === 'admin') {
+                router.push({ name: 'Admin Dashboard' });
+            } else {
+                router.push({ name: 'Home' });
             }
-        });
+        } else {
+            alert("User data not found. Please contact support.");
+        }
+    } catch (error) {
+        switch (error.code) {
+            case 'auth/invalid-email':
+                alert("Invalid email format. Please try again.");
+                break;
+            case 'auth/network-request-failed':
+                alert("Network error. Please check your internet connection and try again.");
+                break;
+            default:
+                alert("Login failed. Please try again.");
+        }
+    }
 };
 </script>
 
