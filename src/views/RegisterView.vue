@@ -7,6 +7,7 @@ import DatePicker from 'primevue/datepicker';
 import { doc, setDoc } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import db from "../Firebase/init";
+import axios from 'axios';
 
 const auth = getAuth();
 
@@ -64,14 +65,10 @@ const submitForm = async () => {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
-            // Update the user's displayName with the username
-            await updateProfile(user, {
-                displayName: username
-            });
+            await updateProfile(user, { displayName: username });
 
             const role = email.toLowerCase() === 'admin@moodx.com' ? 'admin' : 'user';
 
-            // Save additional user data in Firestore
             await setDoc(doc(db, "users", user.uid), {
                 email: email,
                 username: username,
@@ -84,6 +81,14 @@ const submitForm = async () => {
             clearForm();
             isAuthenticated.value = true;
             identity.value = role;
+
+            // Send a welcome email to the new user
+            await axios.post('http://localhost:3000/send-email', {
+                to: email,
+                dynamic_template_data: {
+                    name: username
+                }
+            });
 
             // Redirect based on user role
             if (role === 'admin') {
