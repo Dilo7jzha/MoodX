@@ -83,8 +83,8 @@ const submitForm = async () => {
             identity.value = role;
 
             // Send a welcome email to the new user
-            await axios.post('http://localhost:3000/send-email', {
-                to: email,
+            await axios.post('https://sendemail-opo4w32zbq-uc.a.run.app', {
+                email: email,
                 dynamic_template_data: {
                     name: username
                 }

@@ -12,6 +12,7 @@ import AdminDashboardView from '../views/AdminDashboardView.vue'
 import FeelingStressedView from '../views/resources/FeelingStressedView.vue'
 import FeelingLowView from '../views/resources/FeelingLowView.vue'
 import ExperiencedTraumaView from '../views/resources/ExperiencedTrauma.vue'
+import TalkToChatbotView from '../views/TalkToChatbotView.vue'
 
 import {ref} from 'vue'
 
@@ -33,6 +34,11 @@ const routes = [
     path: '/getHelp/supportResource',
     name: 'Support Resource',
     component: SupportResourceView
+  },
+  {
+    path: '/getHelp/talkToChatbot',
+    name: 'Talk to Chatbot',
+    component: TalkToChatbotView
   },
   {
     path: '/getHelp/bookConsultation',
