@@ -2,9 +2,11 @@ import express from 'express';
 import cors from 'cors';         // Import the CORS package
 import sgMail from '@sendgrid/mail';
 import dotenv from 'dotenv';
+import fs from 'fs';
+import path from 'path';
 
 dotenv.config();
-sgMail.setApiKey('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');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const app = express();
 
@@ -18,11 +20,19 @@ app.post('/send-email', async (req, res) => {
     const msg = {
         to,
         from: {
-            email: 'whateverittakes23@outlook.com',
+            email: process.env.FROM_MAIL,
             name: 'MoodX Team'
         },
-        templateId: 'd-6949e39b03c84ad4ac0929795fa2f2b8',
-        dynamic_template_data: dynamic_template_data // Pass the dynamic data to SendGrid
+        templateId: process.env.TEMPLATE_ID,
+        dynamic_template_data: dynamic_template_data, // Pass the dynamic data to SendGrid
+        attachments: [
+            {
+                content: fs.readFileSync(path.resolve('src/assets/WelcomeLetter.png')).toString("base64"),
+                filename: 'WelcomeLetter.png',
+                type: 'image/png',
+                disposition: 'attachment'
+            }
+        ]
     };
 
     try {
