@@ -7,6 +7,8 @@ import App from './App.vue'
 import router from './router'
 
 import PrimeVue from 'primevue/config'
+import vuetify from './plugins/vuetify';
+import 'vuetify/styles';
 import Aura from '@primevue/themes/aura'
 
 import 'primeicons/primeicons.css';
@@ -15,9 +17,10 @@ import 'primeicons/primeicons.css';
 
 const app = createApp(App)
 app.use(PrimeVue, { theme: { preset: Aura } })
-app.use(router)
+app.use(vuetify);
+app.use(router);
 
 // app.component('DataTable', DataTable)
 // app.component('Column', Column)
 
-app.mount('#app')
+app.mount('#app');

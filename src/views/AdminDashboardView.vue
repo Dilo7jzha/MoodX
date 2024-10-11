@@ -1,76 +1,82 @@
 <template>
-    <div class="row mt-5">
-        <div class="col-md-8 offset-md-2">
-            <h1 class="text-center">Admin Dashboard</h1>
-            <p>This page is for user and volunteer management</p>
+    <v-container class="mt-5">
+        <v-row justify="center">
+            <v-col cols="12" md="8">
+                <v-card>
+                    <v-card-title class="text-center">Admin Dashboard</v-card-title>
+                    <v-card-text>
+                        <p class="text-center">This page is for user and volunteer management</p>
 
-            <!-- Toggle buttons for Users and Volunteers -->
-            <div class="mb-3 text-center">
-                <button @click="currentView = 'users'"
-                    :class="{ 'btn-primary': currentView === 'users', 'btn-secondary': currentView !== 'users' }">
-                    View Users
-                </button>
-                <button @click="currentView = 'volunteers'"
-                    :class="{ 'btn-primary': currentView === 'volunteers', 'btn-secondary': currentView !== 'volunteers' }">
-                    View Volunteers
-                </button>
-            </div>
+                        <!-- Toggle buttons for Users and Volunteers -->
+                        <v-btn-toggle v-model="currentView" class="d-flex justify-center mb-3">
+                            <v-btn value="users" color="primary" depressed>View Users</v-btn>
+                            <v-btn value="volunteers" color="primary" depressed>View Volunteers</v-btn>
+                        </v-btn-toggle>
 
-            <!-- Users List -->
-            <ul v-if="currentView === 'users'">
-                <li v-for="user in users" :key="user.id">
-                    {{ user.username }} - email: {{ user.email }}
-                    <button @click="deleteUser(user.id)">Delete</button>
-                </li>
-            </ul>
+                        <!-- Users List -->
+                        <v-list v-if="currentView === 'users'">
+                            <v-list-item v-for="user in users" :key="user.id">
+                                <v-list-item-title>{{ user.username }} - email: {{ user.email }}</v-list-item-title>
+                                <v-list-item-action>
+                                    <v-btn color="error" @click="deleteUser(user.id)">Delete</v-btn>
+                                </v-list-item-action>
+                            </v-list-item>
+                        </v-list>
 
-            <!-- Volunteers List -->
-            <ul v-if="currentView === 'volunteers'">
-                <li v-for="volunteer in volunteers" :key="volunteer.id">
-                    <span v-if="editVolunteerId !== volunteer.id">
-                        {{ volunteer.name }} - Description: {{ volunteer.description }}
-                        <button @click="editVolunteer(volunteer)">Edit</button>
-                        <button @click="deleteVolunteer(volunteer.id)">Delete</button>
-                    </span>
+                        <!-- Volunteers List -->
+                        <v-list v-if="currentView === 'volunteers'">
+                            <v-list-item v-for="volunteer in volunteers" :key="volunteer.id">
+                                <template v-if="editVolunteerId !== volunteer.id">
+                                    <v-list-item-title>
+                                        Name: {{ volunteer.name }} - Interests: {{ volunteer.interests }}
+                                    </v-list-item-title>
+                                    <v-list-item-action>
+                                        <v-btn color="primary" @click="editVolunteer(volunteer)">Edit</v-btn>
+                                        <v-btn color="error" @click="deleteVolunteer(volunteer.id)">Delete</v-btn>
+                                    </v-list-item-action>
+                                </template>
 
-                    <!-- Edit Form -->
-                    <div v-else>
-                        <label>
-                            Name:
-                            <input type="text" v-model="editVolunteerData.name" required />
-                        </label>
-                        <label>
-                            Description:
-                            <input type="text" v-model="editVolunteerData.description" required />
-                        </label>
-                        <button @click="updateVolunteer(volunteer.id)">Save</button>
-                        <button @click="cancelEdit">Cancel</button>
-                    </div>
-                </li>
-                <!-- Add Volunteer Component -->
-                <AddVolunteer />
-            </ul>
-        </div>
-    </div>
+                                <!-- Edit Form -->
+                                <template v-else>
+                                    <v-text-field v-model="editVolunteerData.name" label="Name"></v-text-field>
+                                    <v-text-field v-model="editVolunteerData.interests"
+                                        label="Interests"></v-text-field>
+                                    <v-btn color="success" @click="updateVolunteer(volunteer.id)">Save</v-btn>
+                                    <v-btn color="secondary" @click="cancelEdit">Cancel</v-btn>
+                                </template>
+                            </v-list-item>
+                            <!-- Add Volunteer Form -->
+                            <v-card class="pa-4" mt-4>
+                                <v-card-title class="text-h5">Add Volunteer</v-card-title>
+                                <v-form ref="form" @submit.prevent="addVolunteer">
+                                    <v-text-field v-model="name" label="Name"></v-text-field>
+                                    <v-text-field v-model="interests" label="Interests"></v-text-field>
+                                    <v-btn type="submit" color="primary">Add Volunteer</v-btn>
+                                </v-form>
+                            </v-card>
+                        </v-list>
+                    </v-card-text>
+                </v-card>
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
 
 <script>
 import { ref, onMounted } from 'vue';
-import { collection, query, getDocs, doc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { collection, query, getDocs, doc, deleteDoc, updateDoc, addDoc } from 'firebase/firestore';
 import db from '@/Firebase/init.js';
-import AddVolunteer from '@/components/AddVolunteer.vue';
 
 export default {
     name: 'AdminDashboard',
-    components: {
-        AddVolunteer
-    },
     setup() {
+        const name = ref('');
+        const interests = ref('');
         const currentView = ref('users');
         const users = ref([]);
         const volunteers = ref([]);
         const editVolunteerId = ref(null);
-        const editVolunteerData = ref({ name: '', description: '' });
+        const editVolunteerData = ref({ name: '', interests: '' });
 
         const fetchUsers = async () => {
             try {
@@ -112,6 +118,27 @@ export default {
             }
         };
 
+        const addVolunteer = async () => {
+            //validation check: input can't be empty
+            if (!name.value.trim() || !interests.value.trim()) {
+                alert('Please fill in all fields.');
+                return;
+            }
+            try {
+                await addDoc(collection(db, 'volunteers'), {
+                    name: name.value,
+                    interests: interests.value
+                });
+                //clear input fields
+                name.value = '';
+                interests.value = '';
+                alert('Volunteer added successfully!');
+                fetchVolunteers();
+            } catch (error) {
+                console.error('Error adding volunteer: ', error);
+            }
+        };
+
         const deleteVolunteer = async (volunteerId) => {
             try {
                 const volunteerRef = doc(db, 'volunteers', volunteerId);
@@ -126,15 +153,19 @@ export default {
 
         const editVolunteer = (volunteer) => {
             editVolunteerId.value = volunteer.id;
-            editVolunteerData.value = { name: volunteer.name, description: volunteer.description };
+            editVolunteerData.value = { name: volunteer.name, interests: volunteer.interests };
         };
 
         const updateVolunteer = async (volunteerId) => {
+            if (!validateEditData()) {
+                alert('Please fill in all fields.');
+                return;
+            }
             try {
                 const volunteerRef = doc(db, 'volunteers', volunteerId);
                 await updateDoc(volunteerRef, {
                     name: editVolunteerData.value.name,
-                    description: editVolunteerData.value.description
+                    interests: editVolunteerData.value.interests
                 });
                 alert('Volunteer updated successfully');
                 fetchVolunteers();
@@ -145,9 +176,13 @@ export default {
             }
         };
 
+        const validateEditData = () => {
+            return editVolunteerData.value.name.trim() !== '' && editVolunteerData.value.interests.trim() !== '';
+        };
+
         const cancelEdit = () => {
             editVolunteerId.value = null;
-            editVolunteerData.value = { name: '', description: '' };
+            editVolunteerData.value = { name: '', interests: '' };
         };
 
         onMounted(() => {
@@ -156,15 +191,19 @@ export default {
         });
 
         return {
+            name,
+            interests,
             currentView,
             users,
             volunteers,
             editVolunteerId,
             editVolunteerData,
             deleteUser,
+            addVolunteer,
             deleteVolunteer,
             editVolunteer,
             updateVolunteer,
+            validateEditData,
             cancelEdit
         };
     }
@@ -172,13 +211,7 @@ export default {
 </script>
 
 <style scoped>
-.btn-primary {
-    background-color: #007bff;
-    color: white;
-}
-
-.btn-secondary {
-    background-color: #6c757d;
-    color: white;
+.v-btn {
+    margin: 0.5rem;
 }
 </style>
