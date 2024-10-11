@@ -14,11 +14,19 @@
                         </v-btn-toggle>
 
                         <!-- Users Table -->
-                        <v-data-table v-if="currentView === 'users'" :headers="userHeaders" :items="users"
+                        <v-data-table v-if="currentView === 'users'" :headers="userHeaders" :items="filteredUsers"
                             :search="userSearch" :items-per-page="10" class="elevation-1" dense>
                             <template v-slot:top>
-                                <v-text-field v-model="userSearch" label="Search users" class="mb-3"
-                                    dense></v-text-field>
+                                <v-row class="px-4">
+                                    <v-col cols="6">
+                                        <v-text-field v-model="userNameSearch" label="Search by Name"
+                                            dense></v-text-field>
+                                    </v-col>
+                                    <v-col cols="6">
+                                        <v-text-field v-model="userEmailSearch" label="Search by Interests"
+                                            dense></v-text-field>
+                                    </v-col>
+                                </v-row>
                             </template>
                             <template v-slot:item.action="{ item }">
                                 <!-- We don't allow admin to edit user -->
@@ -28,11 +36,19 @@
 
                         <!-- Volunteers Table -->
                         <v-data-table v-if="currentView === 'volunteers'" :headers="volunteerHeaders"
-                            :items="volunteers" :search="volunteerSearch" :items-per-page="10" class="elevation-1"
-                            dense>
+                            :items="filteredVolunteers" :search="volunteerSearch" :items-per-page="10"
+                            class="elevation-1" dense>
                             <template v-slot:top>
-                                <v-text-field v-model="volunteerSearch" label="Search volunteers" class="mb-3"
-                                    dense></v-text-field>
+                                <v-row class="px-4">
+                                    <v-col cols="6">
+                                        <v-text-field v-model="volunteerNameSearch" label="Search by Name"
+                                            dense></v-text-field>
+                                    </v-col>
+                                    <v-col cols="6">
+                                        <v-text-field v-model="volunteerInterestsSearch" label="Search by Interests"
+                                            dense></v-text-field>
+                                    </v-col>
+                                </v-row>
                             </template>
                             <template v-slot:item.action="{ item }">
                                 <v-btn color="primary" @click="openEditDialog(item)">
@@ -78,7 +94,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { collection, query, getDocs, doc, deleteDoc, updateDoc, addDoc } from 'firebase/firestore';
 import db from '@/Firebase/init.js';
 
@@ -194,6 +210,28 @@ export default {
             editVolunteerData.value = { name: '', interests: '' };
         };
 
+        const volunteerNameSearch = ref('');
+        const volunteerInterestsSearch = ref('');
+
+        const filteredVolunteers = computed(() => {
+            return volunteers.value.filter(volunteer => {
+                const matchesName = volunteer.name.toLowerCase().includes(volunteerNameSearch.value.toLowerCase());
+                const matchesInterests = volunteer.interests.toLowerCase().includes(volunteerInterestsSearch.value.toLowerCase());
+                return matchesName && matchesInterests;
+            });
+        });
+
+        const userNameSearch = ref('');
+        const userEmailSearch = ref('');
+
+        const filteredUsers = computed(() => {
+            return users.value.filter(user => {
+                const matchesName = user.username.toLowerCase().includes(userNameSearch.value.toLowerCase());
+                const matchesEmail = user.email.toLowerCase().includes(userEmailSearch.value.toLowerCase());
+                return matchesName && matchesEmail;
+            });
+        });
+
         onMounted(() => {
             fetchUsers();
             fetchVolunteers();
@@ -216,7 +254,13 @@ export default {
             deleteVolunteer,
             openEditDialog,
             updateVolunteer,
-            closeEditDialog
+            closeEditDialog,
+            volunteerNameSearch,
+            volunteerInterestsSearch,
+            filteredVolunteers,
+            userNameSearch,
+            userEmailSearch,
+            filteredUsers
         };
     }
 };
