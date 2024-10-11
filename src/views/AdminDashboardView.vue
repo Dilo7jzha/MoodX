@@ -19,11 +19,11 @@
                             <template v-slot:top>
                                 <v-row class="px-4">
                                     <v-col cols="6">
-                                        <v-text-field v-model="userNameSearch" label="Search by Name"
+                                        <v-text-field v-model="userNameSearch" label="Search by Username"
                                             dense></v-text-field>
                                     </v-col>
                                     <v-col cols="6">
-                                        <v-text-field v-model="userEmailSearch" label="Search by Interests"
+                                        <v-text-field v-model="userEmailSearch" label="Search by Email"
                                             dense></v-text-field>
                                     </v-col>
                                 </v-row>
