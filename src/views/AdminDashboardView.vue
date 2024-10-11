@@ -13,52 +13,67 @@
                             <v-btn value="volunteers" color="primary" depressed>View Volunteers</v-btn>
                         </v-btn-toggle>
 
-                        <!-- Users List -->
-                        <v-list v-if="currentView === 'users'">
-                            <v-list-item v-for="user in users" :key="user.id">
-                                <v-list-item-title>{{ user.username }} - email: {{ user.email }}</v-list-item-title>
-                                <v-list-item-action>
-                                    <v-btn color="error" @click="deleteUser(user.id)">Delete</v-btn>
-                                </v-list-item-action>
-                            </v-list-item>
-                        </v-list>
+                        <!-- Users Table -->
+                        <v-data-table v-if="currentView === 'users'" :headers="userHeaders" :items="users"
+                            :search="userSearch" :items-per-page="10" class="elevation-1" dense>
+                            <template v-slot:top>
+                                <v-text-field v-model="userSearch" label="Search users" class="mb-3"
+                                    dense></v-text-field>
+                            </template>
+                            <template v-slot:item.action="{ item }">
+                                <!-- We don't allow admin to edit user -->
+                                <v-btn color="error" @click="deleteUser(item.id)">Delete</v-btn>
+                            </template>
+                        </v-data-table>
 
-                        <!-- Volunteers List -->
-                        <v-list v-if="currentView === 'volunteers'">
-                            <v-list-item v-for="volunteer in volunteers" :key="volunteer.id">
-                                <template v-if="editVolunteerId !== volunteer.id">
-                                    <v-list-item-title>
-                                        Name: {{ volunteer.name }} - Interests: {{ volunteer.interests }}
-                                    </v-list-item-title>
-                                    <v-list-item-action>
-                                        <v-btn color="primary" @click="editVolunteer(volunteer)">Edit</v-btn>
-                                        <v-btn color="error" @click="deleteVolunteer(volunteer.id)">Delete</v-btn>
-                                    </v-list-item-action>
-                                </template>
+                        <!-- Volunteers Table -->
+                        <v-data-table v-if="currentView === 'volunteers'" :headers="volunteerHeaders"
+                            :items="volunteers" :search="volunteerSearch" :items-per-page="10" class="elevation-1"
+                            dense>
+                            <template v-slot:top>
+                                <v-text-field v-model="volunteerSearch" label="Search volunteers" class="mb-3"
+                                    dense></v-text-field>
+                            </template>
+                            <template v-slot:item.action="{ item }">
+                                <v-btn color="primary" @click="openEditDialog(item)">
+                                    Edit
+                                </v-btn>
+                                <v-btn color="error" @click="deleteVolunteer(item.id)">
+                                    Delete
+                                </v-btn>
+                            </template>
+                        </v-data-table>
 
-                                <!-- Edit Form -->
-                                <template v-else>
-                                    <v-text-field v-model="editVolunteerData.name" label="Name"></v-text-field>
-                                    <v-text-field v-model="editVolunteerData.interests"
-                                        label="Interests"></v-text-field>
-                                    <v-btn color="success" @click="updateVolunteer(volunteer.id)">Save</v-btn>
-                                    <v-btn color="secondary" @click="cancelEdit">Cancel</v-btn>
-                                </template>
-                            </v-list-item>
-                            <!-- Add Volunteer Form -->
-                            <v-card class="pa-4" mt-4>
-                                <v-card-title class="text-h5">Add Volunteer</v-card-title>
-                                <v-form ref="form" @submit.prevent="addVolunteer">
-                                    <v-text-field v-model="name" label="Name"></v-text-field>
-                                    <v-text-field v-model="interests" label="Interests"></v-text-field>
-                                    <v-btn type="submit" color="primary">Add Volunteer</v-btn>
-                                </v-form>
-                            </v-card>
-                        </v-list>
+                        <!-- Add Volunteer Form -->
+                        <v-card v-if="currentView === 'volunteers'" class="pa-4 mt-4">
+                            <v-card-title class="text-h5">Add Volunteer</v-card-title>
+                            <v-form ref="form" @submit.prevent="addVolunteer">
+                                <v-text-field v-model="name" label="Name" required></v-text-field>
+                                <v-text-field v-model="interests" label="Interests" required></v-text-field>
+                                <v-btn type="submit" color="primary">Add Volunteer</v-btn>
+                            </v-form>
+                        </v-card>
                     </v-card-text>
                 </v-card>
             </v-col>
         </v-row>
+
+        <!-- Edit Volunteer Dialog -->
+        <v-dialog v-model="editDialog" max-width="500px">
+            <v-card>
+                <v-card-title class="text-h5">Edit Volunteer</v-card-title>
+                <v-card-text>
+                    <v-form ref="editForm">
+                        <v-text-field v-model="editVolunteerData.name" label="Name" required></v-text-field>
+                        <v-text-field v-model="editVolunteerData.interests" label="Interests" required></v-text-field>
+                    </v-form>
+                </v-card-text>
+                <v-card-actions>
+                    <v-btn color="primary" @click="updateVolunteer">Save</v-btn>
+                    <v-btn color="secondary" @click="closeEditDialog">Cancel</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </v-container>
 </template>
 
@@ -75,18 +90,28 @@ export default {
         const currentView = ref('users');
         const users = ref([]);
         const volunteers = ref([]);
-        const editVolunteerId = ref(null);
+        const userSearch = ref('');
+        const volunteerSearch = ref('');
+        const editDialog = ref(false);
         const editVolunteerData = ref({ name: '', interests: '' });
+
+        const userHeaders = [
+            { title: 'Username', key: 'username', sortable: true },
+            { title: 'Email', key: 'email', sortable: true },
+            { title: 'Actions', key: 'action', sortable: false }
+        ];
+
+        const volunteerHeaders = [
+            { title: 'Name', key: 'name', sortable: true },
+            { title: 'Interests', key: 'interests', sortable: true },
+            { title: 'Actions', key: 'action', sortable: false }
+        ];
 
         const fetchUsers = async () => {
             try {
                 const q = query(collection(db, 'users'));
                 const querySnapshot = await getDocs(q);
-                const usersArray = [];
-                querySnapshot.forEach((doc) => {
-                    usersArray.push({ id: doc.id, ...doc.data() });
-                });
-                users.value = usersArray;
+                users.value = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             } catch (error) {
                 console.error("Error fetching users: ", error);
             }
@@ -96,11 +121,7 @@ export default {
             try {
                 const q = query(collection(db, 'volunteers'));
                 const querySnapshot = await getDocs(q);
-                const volunteersArray = [];
-                querySnapshot.forEach((doc) => {
-                    volunteersArray.push({ id: doc.id, ...doc.data() });
-                });
-                volunteers.value = volunteersArray;
+                volunteers.value = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             } catch (error) {
                 console.error("Error fetching volunteers: ", error);
             }
@@ -108,18 +129,15 @@ export default {
 
         const deleteUser = async (userId) => {
             try {
-                const userRef = doc(db, 'users', userId);
-                await deleteDoc(userRef);
-                alert('User deleted successfully');
+                await deleteDoc(doc(db, 'users', userId));
+                alert('User deleted successfully!')
                 fetchUsers();
             } catch (error) {
                 console.error('Error deleting user: ', error);
-                alert('Error deleting user');
             }
         };
 
         const addVolunteer = async () => {
-            //validation check: input can't be empty
             if (!name.value.trim() || !interests.value.trim()) {
                 alert('Please fill in all fields.');
                 return;
@@ -129,10 +147,9 @@ export default {
                     name: name.value,
                     interests: interests.value
                 });
-                //clear input fields
                 name.value = '';
                 interests.value = '';
-                alert('Volunteer added successfully!');
+                alert('Volunteer added successfully!')
                 fetchVolunteers();
             } catch (error) {
                 console.error('Error adding volunteer: ', error);
@@ -141,47 +158,39 @@ export default {
 
         const deleteVolunteer = async (volunteerId) => {
             try {
-                const volunteerRef = doc(db, 'volunteers', volunteerId);
-                await deleteDoc(volunteerRef);
-                alert('Volunteer deleted successfully');
+                await deleteDoc(doc(db, 'volunteers', volunteerId));
+                alert('Volunteer deleted successfully!')
                 fetchVolunteers();
             } catch (error) {
                 console.error('Error deleting volunteer: ', error);
-                alert('Error deleting volunteer');
             }
         };
 
-        const editVolunteer = (volunteer) => {
-            editVolunteerId.value = volunteer.id;
-            editVolunteerData.value = { name: volunteer.name, interests: volunteer.interests };
+        const openEditDialog = (volunteer) => {
+            editVolunteerData.value = { ...volunteer };
+            editDialog.value = true;
         };
 
-        const updateVolunteer = async (volunteerId) => {
-            if (!validateEditData()) {
+        const updateVolunteer = async () => {
+            if (!editVolunteerData.value.name.trim() || !editVolunteerData.value.interests.trim()) {
                 alert('Please fill in all fields.');
                 return;
             }
             try {
-                const volunteerRef = doc(db, 'volunteers', volunteerId);
-                await updateDoc(volunteerRef, {
+                await updateDoc(doc(db, 'volunteers', editVolunteerData.value.id), {
                     name: editVolunteerData.value.name,
                     interests: editVolunteerData.value.interests
                 });
-                alert('Volunteer updated successfully');
+                alert('Volunteer updated successfully!')
                 fetchVolunteers();
-                cancelEdit();
+                closeEditDialog();
             } catch (error) {
                 console.error('Error updating volunteer: ', error);
-                alert('Error updating volunteer');
             }
         };
 
-        const validateEditData = () => {
-            return editVolunteerData.value.name.trim() !== '' && editVolunteerData.value.interests.trim() !== '';
-        };
-
-        const cancelEdit = () => {
-            editVolunteerId.value = null;
+        const closeEditDialog = () => {
+            editDialog.value = false;
             editVolunteerData.value = { name: '', interests: '' };
         };
 
@@ -196,15 +205,18 @@ export default {
             currentView,
             users,
             volunteers,
-            editVolunteerId,
+            userSearch,
+            volunteerSearch,
+            editDialog,
             editVolunteerData,
+            userHeaders,
+            volunteerHeaders,
             deleteUser,
             addVolunteer,
             deleteVolunteer,
-            editVolunteer,
+            openEditDialog,
             updateVolunteer,
-            validateEditData,
-            cancelEdit
+            closeEditDialog
         };
     }
 };
