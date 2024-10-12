@@ -2,7 +2,7 @@
     <v-container class="mt-5">
         <v-row justify="center">
             <v-col cols="12" md="8">
-                <h1 class="text-center">Get Help</h1>
+                <h1 class="text-center">Get Help (Direct to clinic)</h1>
                 <p>
                     You can get the direction of the path from your current location to our organization by clicking on
                     "Current Location" and then clicking on "Show Route".

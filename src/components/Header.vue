@@ -26,6 +26,7 @@ const logout = () => {
             </router-link>
             <ul class="dropdown-menu" aria-labelledby="getHelpDropdown">
               <li><router-link to="/getHelp/supportResource" class="dropdown-item">Support resource</router-link></li>
+              <li><router-link to="/getHelp" class="dropdown-item">Direct to clinic</router-link></li>
               <li><router-link to="/getHelp/bookConsultation" class="dropdown-item">Book Consultation</router-link></li>
               <li><router-link to="/getHelp/talkToChatbot" class="dropdown-item">Talk to Chatbot</router-link></li>
             </ul>
