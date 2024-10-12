@@ -58,7 +58,6 @@ import { collection, query, where, getDocs, Timestamp } from 'firebase/firestore
 import { Chart, registerables } from 'chart.js';
 import db from '@/Firebase/init.js';
 import Papa from 'papaparse';
-import jsPDF from 'jspdf';
 import html2pdf from 'html2pdf.js';
 
 Chart.register(...registerables);
