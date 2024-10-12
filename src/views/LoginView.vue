@@ -103,7 +103,7 @@ const submitForm = async () => {
                             </div>
                         </div>
                         <div class="text-center">
-                            <button type="submit" class="btn btn-primary me-2 mb-3">Login</button>
+                            <v-btn color="primary" class="me-2 mb-3" type="submit">Login</v-btn>
                             <p class="mb-3">Don't have an account?</p>
                             <RouterLink to="/register" class="mb-3">Sign up now</RouterLink>
                         </div>

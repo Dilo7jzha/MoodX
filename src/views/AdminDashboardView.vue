@@ -245,12 +245,7 @@ export default {
             }
             try {
                 const response = await axios.post('https://sendbulkemails-opo4w32zbq-uc.a.run.app', {
-                    emails: selectedUsers.value,
-                    dynamicTemplateData: {
-                        // Example dynamic data, customize as needed
-                        subject: 'Your Subject Here',
-                        message: 'This is a bulk email message to selected users.',
-                    }
+                    emails: selectedUsers.value
                 });
                 alert(response.data);
             } catch (error) {
