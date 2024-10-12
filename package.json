@@ -12,6 +12,8 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "@fullcalendar/core": "^6.1.15",
+    "@fullcalendar/vue3": "^6.1.15",
     "@google/generative-ai": "^0.21.0",
     "@mapbox/mapbox-gl-geocoder": "^5.0.3",
     "@mdi/font": "^7.4.47",
@@ -24,6 +26,9 @@
     "firebase": "^10.13.2",
     "firebase-admin": "^12.6.0",
     "firebase-functions": "^6.0.1",
+    "html2pdf.js": "^0.10.2",
+    "json2csv": "^6.0.0-alpha.2",
+    "jspdf": "^2.5.2",
     "mapbox-gl": "^3.7.0",
     "primeicons": "^7.0.0",
     "primevue": "^4.0.5",

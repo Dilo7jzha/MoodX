@@ -5,6 +5,7 @@
             <div class="title-rating">
                 <h1>Experiencing Trauma</h1>
                 <p class="subtitle">What should and shouldn't I do if I'm experiencing trauma?</p>
+                <button @click="exportToPDF">Export to PDF</button>
 
                 <div class="rating-summary">
                     <div class="overall-rating">
@@ -27,7 +28,7 @@
         </div>
 
         <!-- Main Content Section -->
-        <div class="content-section">
+        <div ref="contentToExport" class="content-section">
             <div class="content-sidebar">
                 <h4>Content</h4>
                 <ul>
@@ -90,6 +91,8 @@
 <script setup>
 import { ref, computed } from 'vue';
 import Rating from 'primevue/rating';
+import html2pdf from 'html2pdf.js';
+const contentToExport = ref(null);
 
 // Define variables
 const userRating = ref(null); // The user's selected rating
@@ -114,6 +117,22 @@ const submitRating = () => {
         // Mark as submitted to show the thank you message
         ratingSubmitted.value = true;
         alert('Thanks for your rating!')
+    }
+};
+
+const exportToPDF = () => {
+    if (contentToExport.value) {
+        const options = {
+            margin: 1,
+            filename: 'ExperiencingTrauma.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+
+        html2pdf().set(options).from(contentToExport.value).save();
+    } else {
+        console.error("No content to export.");
     }
 };
 </script>
