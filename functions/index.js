@@ -9,24 +9,11 @@ const cors = require("cors")({origin: true});
 const {GoogleGenerativeAI} = require("@google/generative-ai");
 
 admin.initializeApp();
-// const db = admin.firestore();
 sgMail.setApiKey(process.env.VITE_SENDGRID_KEY);
-// const sendgridApiKey = functions.config().sendgrid.key;
-// const fromEmail = functions.config().from.mail;
-// const templateId = functions.config().template.id;
-
-// Set up environment variables from Firebase Functions config
-// sgMail.setApiKey(sendgridApiKey);
-
-// const app = express();
-
-// Use CORS middleware to allow cross-origin requests
-// app.use(cors());
-// app.use(express.json());
 
 exports.sendEmail = onRequest((req, res) => {
   cors(req, res, async () => {
-    const {email, dynamicTemplateData} = req.body;
+    const {email} = req.body;
     const filePath = path.join(__dirname, "assets/WelcomeLetter.png");
     const attachment = fs.readFileSync(filePath).toString("base64");
 
@@ -37,7 +24,6 @@ exports.sendEmail = onRequest((req, res) => {
         name: "MoodX Team",
       },
       templateId: process.env.TEMPLATE_ID,
-      dynamicTemplateData: dynamicTemplateData,
       attachments: [
         {
           content: attachment,
@@ -66,11 +52,7 @@ exports.sendEmail = onRequest((req, res) => {
 
 exports.sendBulkEmails = onRequest((req, res) => {
   cors(req, res, async () => {
-    const {emails, dynamicTemplateData} = req.body;
-
-    // Path to attachment file
-    const filePath = path.join(__dirname, "assets/WelcomeLetter.png");
-    const attachment = fs.readFileSync(filePath).toString("base64");
+    const {emails} = req.body;
 
     // Prepare messages array for bulk sending
     const messages = emails.map((email) => ({
@@ -79,16 +61,7 @@ exports.sendBulkEmails = onRequest((req, res) => {
         email: process.env.FROM_MAIL,
         name: "MoodX Team",
       },
-      templateId: process.env.TEMPLATE_ID,
-      dynamicTemplateData: dynamicTemplateData,
-      attachments: [
-        {
-          content: attachment,
-          filename: "WelcomeLetter.png",
-          type: "image/png",
-          disposition: "attachment",
-        },
-      ],
+      templateId: process.env.TEMPLATE_ID_BULK,
     }));
 
     try {
