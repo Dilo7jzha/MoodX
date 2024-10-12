@@ -13,6 +13,7 @@ import FeelingStressedView from '../views/resources/FeelingStressedView.vue'
 import FeelingLowView from '../views/resources/FeelingLowView.vue'
 import ExperiencedTraumaView from '../views/resources/ExperiencedTrauma.vue'
 import TalkToChatbotView from '../views/TalkToChatbotView.vue'
+import UserCreationChart from '../views/UserCreationChart.vue'
 
 import {ref} from 'vue'
 
@@ -89,7 +90,12 @@ const routes = [
     path: '/getHelp/supportResource/experiencedTrauma',
     name: 'Experienced Trauma',
     component: ExperiencedTraumaView
-  }
+  },
+  {
+    path: '/userCreationChart',
+    name: 'UserCreationChart',
+    component: UserCreationChart
+  },
 ]
 
 const router = createRouter({

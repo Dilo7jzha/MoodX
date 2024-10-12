@@ -26,10 +26,14 @@
                                         <v-text-field v-model="userEmailSearch" label="Search by Email"
                                             dense></v-text-field>
                                     </v-col>
+                                    <v-col cols="12" class="text-right">
+                                        <v-btn color="primary" @click="sendBulkEmails">Email Update</v-btn>
+                                    </v-col>
                                 </v-row>
                             </template>
                             <template v-slot:item.action="{ item }">
                                 <!-- We don't allow admin to edit user -->
+                                <v-checkbox v-model="selectedUsers" :value="item.email"></v-checkbox>
                                 <v-btn color="error" @click="deleteUser(item.id)">Delete</v-btn>
                             </template>
                         </v-data-table>
@@ -97,6 +101,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { collection, query, getDocs, doc, deleteDoc, updateDoc, addDoc } from 'firebase/firestore';
 import db from '@/Firebase/init.js';
+import axios from 'axios';
 
 export default {
     name: 'AdminDashboard',
@@ -110,11 +115,12 @@ export default {
         const volunteerSearch = ref('');
         const editDialog = ref(false);
         const editVolunteerData = ref({ name: '', interests: '' });
+        const selectedUsers = ref([]);
 
         const userHeaders = [
             { title: 'Username', key: 'username', sortable: true },
             { title: 'Email', key: 'email', sortable: true },
-            { title: 'Actions', key: 'action', sortable: false }
+            { title: 'Actions (checkbox for email update)', key: 'action', sortable: false }
         ];
 
         const volunteerHeaders = [
@@ -232,6 +238,27 @@ export default {
             });
         });
 
+        const sendBulkEmails = async () => {
+            if (selectedUsers.value.length === 0) {
+                alert('Please select at least one user to send emails.');
+                return;
+            }
+            try {
+                const response = await axios.post('https://sendbulkemails-opo4w32zbq-uc.a.run.app', {
+                    emails: selectedUsers.value,
+                    dynamicTemplateData: {
+                        // Example dynamic data, customize as needed
+                        subject: 'Your Subject Here',
+                        message: 'This is a bulk email message to selected users.',
+                    }
+                });
+                alert(response.data);
+            } catch (error) {
+                console.error("Error sending bulk email:", error);
+                alert("Failed to send bulk email.");
+            }
+        };
+
         onMounted(() => {
             fetchUsers();
             fetchVolunteers();
@@ -260,7 +287,9 @@ export default {
             filteredVolunteers,
             userNameSearch,
             userEmailSearch,
-            filteredUsers
+            filteredUsers,
+            sendBulkEmails,
+            selectedUsers
         };
     }
 };

@@ -64,6 +64,45 @@ exports.sendEmail = onRequest((req, res) => {
   });
 });
 
+exports.sendBulkEmails = onRequest((req, res) => {
+  cors(req, res, async () => {
+    const {emails, dynamicTemplateData} = req.body;
+
+    // Path to attachment file
+    const filePath = path.join(__dirname, "assets/WelcomeLetter.png");
+    const attachment = fs.readFileSync(filePath).toString("base64");
+
+    // Prepare messages array for bulk sending
+    const messages = emails.map((email) => ({
+      to: email,
+      from: {
+        email: process.env.FROM_MAIL,
+        name: "MoodX Team",
+      },
+      templateId: process.env.TEMPLATE_ID,
+      dynamicTemplateData: dynamicTemplateData,
+      attachments: [
+        {
+          content: attachment,
+          filename: "WelcomeLetter.png",
+          type: "image/png",
+          disposition: "attachment",
+        },
+      ],
+    }));
+
+    try {
+      // Send all emails in a single call
+      await sgMail.send(messages, {isMultiple: true});
+      console.log("Bulk email sent successfully");
+      res.status(200).send("Bulk email sent successfully");
+    } catch (error) {
+      console.error("Error sending bulk email:", error);
+      res.status(500).send({error: "Failed to send bulk email"});
+    }
+  });
+});
+
 const textGenTextOnlyPrompt = async (promptText) => {
   // Initialize the Google Generative AI client with your API key
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
