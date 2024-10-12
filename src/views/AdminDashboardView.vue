@@ -11,6 +11,7 @@
                         <v-btn-toggle v-model="currentView" class="d-flex justify-center mb-3">
                             <v-btn value="users" color="primary" depressed>View Users</v-btn>
                             <v-btn value="volunteers" color="primary" depressed>View Volunteers</v-btn>
+                            <v-btn value="UserChart" color="primary" depressed>View User Creation Chart</v-btn>
                         </v-btn-toggle>
 
                         <!-- Users Table -->
@@ -73,6 +74,11 @@
                                 <v-btn type="submit" color="primary">Add Volunteer</v-btn>
                             </v-form>
                         </v-card>
+
+                        <!-- UserChart Table -->
+                        <v-data-table v-if="currentView === 'UserChart'">
+                            <UserCreationChart />
+                        </v-data-table>
                     </v-card-text>
                 </v-card>
             </v-col>
@@ -102,6 +108,7 @@ import { ref, computed, onMounted } from 'vue';
 import { collection, query, getDocs, doc, deleteDoc, updateDoc, addDoc } from 'firebase/firestore';
 import db from '@/Firebase/init.js';
 import axios from 'axios';
+import UserCreationChart from '../components/UserCreationChart.vue';
 
 export default {
     name: 'AdminDashboard',
@@ -286,6 +293,9 @@ export default {
             sendBulkEmails,
             selectedUsers
         };
+    },
+    components: {
+        UserCreationChart
     }
 };
 </script>
