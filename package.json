@@ -34,6 +34,7 @@
     "json2csv": "^6.0.0-alpha.2",
     "jspdf": "^2.5.2",
     "mapbox-gl": "^3.7.0",
+    "papaparse": "^5.4.1",
     "primeicons": "^7.0.0",
     "primevue": "^4.0.5",
     "vue": "^3.4.29",

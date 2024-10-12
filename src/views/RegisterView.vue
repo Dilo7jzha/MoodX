@@ -223,10 +223,12 @@ const validateEmail = (blur) => {
                             </div>
                         </div>
                         <div class="text-center">
-                            <button type="submit" class="btn btn-primary me-2 mb-3">Sign Up</button>
-                            <button type="button" class="btn btn-secondary me-2 mb-3" @click="clearForm">Clear</button>
-                            <p class="mb-3">Already have an account?</p>
-                            <router-link to="/login" class="mb-3">Login</router-link>
+                            <v-col>
+                                <v-btn color="primary" class="me-2 mb-3" type="submit">Sign Up</v-btn>
+                                <v-btn color="secondary" class="me-2 mb-3" @click="clearForm">Clear</v-btn>
+                                <p class="mb-3">Already have an account? <router-link to="/login">Login</router-link>
+                                </p>
+                            </v-col>
                         </div>
                     </form>
                 </div>
