@@ -23,7 +23,9 @@
             </div>
 
             <div class="image-placeholder">
-                <div class="image-box"></div>
+                <div class="image-box">
+                    <img src="/src/assets/img/stressed.png" alt="A stressed person" class="visually-hidden">
+                </div>
             </div>
         </div>
 
@@ -200,6 +202,18 @@ h1 {
     background-image: url(/src/assets/img/stressed.png);
     background-size: 100%;
     background-repeat: no-repeat;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 .content-section {
