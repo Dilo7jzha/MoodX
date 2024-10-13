@@ -7,11 +7,14 @@
             <p>You can select more than one.</p>
 
             <div class="support-options">
-                <router-link to="/getHelp/supportResource/feelingStressed" class="support-button">I'm feeling stressed
+                <router-link to="/getHelp/supportResource/feelingStressed" aria-label="I'm feeling stressed or anxious"
+                    class="support-button">I'm feeling stressed
                     or anxious</router-link>
-                <router-link to="/getHelp/supportResource/feelingLow" class="support-button">I'm feeling low
+                <router-link to="/getHelp/supportResource/feelingLow" class="support-button"
+                    aria-label="I'm feeling low or down">I'm feeling low
                     or down</router-link>
-                <router-link to="/getHelp/supportResource/experiencedTrauma" class="support-button">I have experienced
+                <router-link to="/getHelp/supportResource/experiencedTrauma" class="support-button"
+                    aria-label="I have experienced trauma">I have experienced
                     trauma</router-link>
             </div>
         </div>
