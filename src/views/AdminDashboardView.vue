@@ -8,10 +8,13 @@
                         <p class="text-center">This page is for user and volunteer management</p>
 
                         <!-- Toggle buttons for Users and Volunteers -->
-                        <v-btn-toggle v-model="currentView" class="d-flex justify-center mb-3">
-                            <v-btn value="users" color="primary" depressed>View Users</v-btn>
-                            <v-btn value="volunteers" color="primary" depressed>View Volunteers</v-btn>
-                            <v-btn value="UserChart" color="primary" depressed>View User Creation Chart</v-btn>
+                        <v-btn-toggle v-model="currentView" class="d-flex justify-center mb-3"
+                            aria-controls="currentView" aria-expanded="true">
+                            <v-btn value="users" color="primary" aria-label="View Users" depressed>View Users</v-btn>
+                            <v-btn value="volunteers" color="primary" aria-label="View Volunteers" depressed>View
+                                Volunteers</v-btn>
+                            <v-btn value="UserChart" color="primary" aria-label="View User Creation Chart"
+                                depressed>View User Creation Chart</v-btn>
                         </v-btn-toggle>
 
                         <!-- Users Table -->
@@ -28,14 +31,15 @@
                                             dense></v-text-field>
                                     </v-col>
                                     <v-col cols="12" class="text-right">
-                                        <v-btn color="primary" @click="sendBulkEmails">Email Update</v-btn>
+                                        <v-btn color="primary" @click="sendBulkEmails" aria-label="Email Update">Email
+                                            Update</v-btn>
                                     </v-col>
                                 </v-row>
                             </template>
                             <template v-slot:item.action="{ item }">
                                 <!-- We don't allow admin to edit user -->
                                 <v-checkbox v-model="selectedUsers" :value="item.email"></v-checkbox>
-                                <v-btn color="error" @click="deleteUser(item.id)">Delete</v-btn>
+                                <v-btn color="error" @click="deleteUser(item.id)" aria-label="Delete">Delete</v-btn>
                             </template>
                         </v-data-table>
 
@@ -56,10 +60,10 @@
                                 </v-row>
                             </template>
                             <template v-slot:item.action="{ item }">
-                                <v-btn color="primary" @click="openEditDialog(item)">
+                                <v-btn color="primary" @click="openEditDialog(item)" aria-label="Edit">
                                     Edit
                                 </v-btn>
-                                <v-btn color="error" @click="deleteVolunteer(item.id)">
+                                <v-btn color="error" @click="deleteVolunteer(item.id)" aria-label="Delete">
                                     Delete
                                 </v-btn>
                             </template>
@@ -71,7 +75,7 @@
                             <v-form ref="form" @submit.prevent="addVolunteer">
                                 <v-text-field v-model="name" label="Name" required></v-text-field>
                                 <v-text-field v-model="interests" label="Interests" required></v-text-field>
-                                <v-btn type="submit" color="primary">Add Volunteer</v-btn>
+                                <v-btn type="submit" color="primary" aria-label="Add Volunteer">Add Volunteer</v-btn>
                             </v-form>
                         </v-card>
 
@@ -95,8 +99,8 @@
                     </v-form>
                 </v-card-text>
                 <v-card-actions>
-                    <v-btn color="primary" @click="updateVolunteer">Save</v-btn>
-                    <v-btn color="secondary" @click="closeEditDialog">Cancel</v-btn>
+                    <v-btn color="primary" @click="updateVolunteer" aria-label="Save">Save</v-btn>
+                    <v-btn color="secondary" @click="closeEditDialog" aria-label="Cancel">Cancel</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -303,5 +307,10 @@ export default {
 <style scoped>
 .v-btn {
     margin: 0.5rem;
+}
+
+.v-btn:focus,
+.v-text-field:focus {
+    outline: 2px solid #3b9ddd;
 }
 </style>

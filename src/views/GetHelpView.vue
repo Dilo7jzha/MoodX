@@ -8,10 +8,12 @@
                     "Current Location" and then clicking on "Show Route".
                     You can also find other psychological clinics by using the map:
                 </p>
-                <v-btn @click="getCurrentLocation" color="primary" class="mr-2">Current Location</v-btn>
-                <v-btn @click="showRoute" color="primary">Show Route</v-btn>
-                <div class="map-container mt-3">
-                    <div id="map" class="map"></div>
+                <v-btn @click="getCurrentLocation" color="primary" class="mr-2"
+                    aria-label="Get current location">Current Location</v-btn>
+                <v-btn @click="showRoute" color="primary" aria-label="Show route to clinic">Show Route</v-btn>
+                <a href="#map" class="sr-only">Skip to map</a>
+                <div class="map-container mt-3" tabindex="0">
+                    <div id="map" class="map" tabindex="0"></div>
                 </div>
             </v-col>
         </v-row>
@@ -175,5 +177,22 @@ const showRoute = async () => {
     color: #fff;
     border: none;
     border-radius: 5px;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+button:focus,
+#map:focus {
+    outline: 2px solid #3b9ddd;
 }
 </style>

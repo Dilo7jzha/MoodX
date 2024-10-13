@@ -4,7 +4,8 @@
             <div class="home-content">
                 <h1>Before things get beyond you</h1>
                 <p>Get support from MoodX</p>
-                <router-link to="/getHelp/supportResource" class="home-button">Support resources</router-link>
+                <router-link to="/getHelp/supportResource" aria-label="Support resources" class="home-button">Support
+                    resources</router-link>
             </div>
         </div>
     </div>

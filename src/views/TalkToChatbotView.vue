@@ -45,4 +45,9 @@ const sendMessage = async () => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+input:focus,
+button:focus {
+    outline: 2px solid #007bff;
+}
+</style>

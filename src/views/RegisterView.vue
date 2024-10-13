@@ -277,4 +277,11 @@ const validateEmail = (blur) => {
     text-decoration: none;
     color: #000000;
 }
+
+input:focus,
+button:focus,
+a:focus {
+    outline: 2px solid #007bff;
+    /* Visible focus style */
+}
 </style>
