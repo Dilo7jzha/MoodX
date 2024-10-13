@@ -32,9 +32,9 @@
             <div class="content-sidebar">
                 <h4>Content</h4>
                 <ul>
-                    <li><a href="#understanding-stress">Understanding stress</a></li>
-                    <li><a href="#feelings-effects">Feelings & effects</a></li>
-                    <li><a href="#tips-manage-stress">Tips to manage stress</a></li>
+                    <li><a href="#understanding-stress" aria-label="Understanding stress">Understanding stress</a></li>
+                    <li><a href="#feelings-effects" aria-label="Feelings & effects">Feelings & effects</a></li>
+                    <li><a href="#tips-manage-stress" aria-label="Tips to manage stress">Tips to manage stress</a></li>
                 </ul>
             </div>
 

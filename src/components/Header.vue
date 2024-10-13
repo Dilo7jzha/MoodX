@@ -15,40 +15,50 @@ const logout = () => {
   <div class="container">
     <header class="d-flex justify-content-between align-items-center py-3">
       <h1 class="m-0">
-        <a class="logo" href="/">MoodX</a>
+        <a class="logo" href="/" aria-label="Home">MoodX</a>
       </h1>
       <div class="nav-container d-flex justify-content-center flex-grow-1">
         <ul class="nav nav-pills">
           <li class="nav-item dropdown">
-            <router-link to="/getHelp" class="nav-link dropdown-toggle" id="getHelpDropdown" role="button"
-              data-bs-toggle="dropdown" aria-expanded="false">
+            <a href="/getHelp" class="nav-link dropdown-toggle" id="getHelpDropdown" role="button"
+              data-bs-toggle="dropdown" aria-label="Get help">
               Get help
-            </router-link>
+            </a>
             <ul class="dropdown-menu" aria-labelledby="getHelpDropdown">
-              <li><router-link to="/getHelp/supportResource" class="dropdown-item">Support resource</router-link></li>
-              <li><router-link to="/getHelp" class="dropdown-item">Direct to clinic</router-link></li>
-              <li><router-link to="/getHelp/bookConsultation" class="dropdown-item">Book Consultation</router-link></li>
-              <li><router-link to="/getHelp/talkToChatbot" class="dropdown-item">Talk to Chatbot</router-link></li>
+              <li><router-link to="/getHelp/supportResource" class="dropdown-item" aria-label="Support resource">Support
+                  resource</router-link></li>
+              <li><router-link to="/getHelp" class="dropdown-item" aria-label="Direct to clinic">Direct to
+                  clinic</router-link></li>
+              <li><router-link to="/getHelp/bookConsultation" class="dropdown-item" aria-label="Book Consultation">Book
+                  Consultation</router-link></li>
+              <li><router-link to="/getHelp/talkToChatbot" class="dropdown-item" aria-label="Talk to Chatbot">Talk to
+                  Chatbot</router-link></li>
             </ul>
           </li>
-          <li class="nav-item"><router-link to="/getInvolved" class="nav-link">Get involved</router-link></li>
-          <li class="nav-item"><router-link to="/aboutUs" class="nav-link">About us</router-link></li>
-          <li class="nav-item" v-if="(role === 'admin')"><router-link to="/adminDashboard" class="nav-link">Admin
+          <li class="nav-item"><router-link to="/getInvolved" class="nav-link" aria-label="Get involved">Get
+              involved</router-link></li>
+          <li class="nav-item"><router-link to="/aboutUs" class="nav-link" aria-label="About us">About us</router-link>
+          </li>
+          <li class="nav-item" v-if="(role === 'admin')"><router-link to="/adminDashboard" class="nav-link"
+              aria-label="Admin dashboard">Admin
               dashboard</router-link></li>
         </ul>
       </div>
       <div class="profile nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle" id="getHelpDropdown" role="button" data-bs-toggle="dropdown"
-          aria-expanded="false">
+        <a href="/profile" class="nav-link dropdown-toggle" id="getHelpDropdown" role="button" data-bs-toggle="dropdown"
+          aria-expanded="false" aria-label="Profile">
           <i class="fas fa-user-circle"></i>
         </a>
         <ul class="dropdown-menu" aria-labelledby="getHelpDropdown">
-          <li><router-link to="/profile" class="dropdown-item">Profile</router-link></li>
-          <li v-if="!isAuthenticated"><router-link to="/login" class="dropdown-item">Login</router-link></li>
-          <li v-else><router-link to="/login" class="dropdown-item disabled">Login</router-link></li>
-          <li v-if="isAuthenticated"><router-link to="/login" class="dropdown-item" @click="logout">Logout</router-link>
+          <li><router-link to="/profile" class="dropdown-item" aria-label="Profile">Profile</router-link></li>
+          <li v-if="!isAuthenticated"><router-link to="/login" class="dropdown-item"
+              aria-label="Login">Login</router-link></li>
+          <li v-else><router-link to="/login" class="dropdown-item disabled" aria-label="Login">Login</router-link></li>
+          <li v-if="isAuthenticated"><router-link to="/login" class="dropdown-item" @click="logout"
+              aria-label="Logout">Logout</router-link>
           </li>
-          <li v-else><router-link to="/login" class="dropdown-item disabled" @click="logout">Logout</router-link></li>
+          <li v-else><router-link to="/login" class="dropdown-item disabled" @click="logout"
+              aria-label="Logout">Logout</router-link></li>
         </ul>
       </div>
     </header>

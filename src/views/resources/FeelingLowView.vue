@@ -32,9 +32,12 @@
             <div class="content-sidebar">
                 <h4>Content</h4>
                 <ul>
-                    <li><a href="#mindfulness-and-self-care">Mindfulness and Self-Care</a></li>
-                    <li><a href="#physical-activity-and-routine">Physical Activity and Routine</a></li>
-                    <li><a href="#seeking-support-and-connection">Seeking Support and Connection</a></li>
+                    <li><a href="#mindfulness-and-self-care" aria-label="Mindfulness and Self-Care">Mindfulness and
+                            Self-Care</a></li>
+                    <li><a href="#physical-activity-and-routine" aria-label="Physical Activity and Routine">Physical
+                            Activity and Routine</a></li>
+                    <li><a href="#seeking-support-and-connection" aria-label="Seeking Support and Connection">Seeking
+                            Support and Connection</a></li>
                 </ul>
             </div>
 
@@ -58,18 +61,18 @@
                     energy levels.
                     Incorporating movement into your daily routine can release endorphins, which are natural mood
                     lifters. Maintaining
-                    a consistent routine, even when you don’t feel like it, can provide a sense of structure and
+                    a consistent routine, even when you don't feel like it, can provide a sense of structure and
                     normalcy, which can
                     be comforting during low periods.
                 </p>
 
                 <h2 id="seeking-support-and-connection">Seeking Support and Connection</h2>
                 <p>
-                    During times when you’re feeling down, reaching out for support can make a big difference. Talking
+                    During times when you're feeling down, reaching out for support can make a big difference. Talking
                     to trusted friends,
                     family members, or mental health professionals can help you feel less isolated and provide a new
                     perspective. Remember,
-                    asking for help is a sign of strength, not weakness. You don’t have to face these feelings alone,
+                    asking for help is a sign of strength, not weakness. You don't have to face these feelings alone,
                     and there are many
                     people and resources available to support you through tough times.
                 </p>

@@ -32,9 +32,11 @@
             <div class="content-sidebar">
                 <h4>Content</h4>
                 <ul>
-                    <li><a href="#processing-your-emotions">Processing Your Emotions</a></li>
-                    <li><a href="#self-care-techniques">Self-Care Techniques</a></li>
-                    <li><a href="#seeking-support-and-connection">Seeking Support and Connection</a></li>
+                    <li><a href="#processing-your-emotions" aria-label="Processing Your Emotions">Processing Your
+                            Emotions</a></li>
+                    <li><a href="#self-care-techniques" aria-label="Self-Care Techniques">Self-Care Techniques</a></li>
+                    <li><a href="#seeking-support-and-connection" aria-label="Seeking Support and Connection">Seeking
+                            Support and Connection</a></li>
                 </ul>
             </div>
 

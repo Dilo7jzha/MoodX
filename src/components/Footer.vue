@@ -15,10 +15,10 @@
         <div class="footer-bottom">
             <p>Copyright © 2024 MoodX All rights reserved</p>
             <ul class="legal-links">
-                <li><a href="#">Terms of use</a></li>
-                <li><a href="#">Privacy policy</a></li>
-                <li><a href="#">Charter of rights</a></li>
-                <li><a href="#">Site map</a></li>
+                <li><a href="#" aria-label="Terms of use">Terms of use</a></li>
+                <li><a href="#" aria-label="Privacy policy">Privacy policy</a></li>
+                <li><a href="#" aria-label="Charter of rights">Charter of rights</a></li>
+                <li><a href="#" aria-label="Site map">Site map</a></li>
             </ul>
         </div>
     </footer>
