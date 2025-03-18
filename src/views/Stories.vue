@@ -1,26 +1,33 @@
 <template>
     <div class="stories-container">
-        <h1> D'Angelo's User Testing Stories</h1>
+        <h1 class="title">D'Angelo's User Testing Stories</h1>
         <div v-for="(story, storyIndex) in stories" :key="storyIndex" class="story">
-            <h2 @click="toggleStory(storyIndex)" class="story-title">
-                {{ story.title }}
-            </h2>
-            <div v-if="story.expanded">
-                <div v-for="(point, pointIndex) in story.points" :key="pointIndex" class="story-point">
-                    <h3 @click="togglePoint(storyIndex, pointIndex)" class="story-point-title">
-                        {{ pointIndex + 1 }}. {{ point.title }}
-                    </h3>
-                    <div v-if="point.expanded" class="story-details">
-                        <p><strong>Story:</strong> {{ point.story }}</p>
-                        <h4 v-if="point.locations.length">Important Locations:</h4>
-                        <ul v-if="point.locations.length">
-                            <li v-for="(location, locIndex) in point.locations" :key="locIndex">
-                                {{ location.name }} → ({{ location.latitude }}, {{ location.longitude }})
-                            </li>
-                        </ul>
+            <div class="story-header" @click="toggleStory(storyIndex)">
+                <h2 class="story-title">{{ story.title }}</h2>
+                <span class="toggle-icon">{{ story.expanded ? '▼' : '▶' }}</span>
+            </div>
+            <transition name="fade">
+                <div v-if="story.expanded" class="story-content">
+                    <div v-for="(point, pointIndex) in story.points" :key="pointIndex" class="story-point">
+                        <div class="story-point-header" @click="togglePoint(storyIndex, pointIndex)">
+                            <h3 class="story-point-title">{{ pointIndex + 1 }}. {{ point.title }}</h3>
+                            <span class="toggle-icon">{{ point.expanded ? '▼' : '▶' }}</span>
+                        </div>
+                        <transition name="slide">
+                            <div v-if="point.expanded" class="story-details">
+                                <p><strong>Story:</strong> {{ point.story }}</p>
+                                <h4 v-if="point.locations.length">Important Locations:</h4>
+                                <ul v-if="point.locations.length">
+                                    <li v-for="(location, locIndex) in point.locations" :key="locIndex">
+                                        📍 <strong>{{ location.name }}</strong> → ({{ location.latitude }}, {{
+                                            location.longitude }})
+                                    </li>
+                                </ul>
+                            </div>
+                        </transition>
                     </div>
                 </div>
-            </div>
+            </transition>
         </div>
     </div>
 </template>
@@ -49,7 +56,7 @@ export default {
                         {
                             title: "The Height of Trade During the Tang Dynasty (7th-9th Century)",
                             expanded: false,
-                            story: "Story: The Tang Dynasty saw the peak of Silk Road commerce, with Chinese silk, porcelain, and tea reaching the Middle East and Europe in exchange for spices, glass, and precious metals.",
+                            story: "The Tang Dynasty saw the peak of Silk Road commerce, with Chinese silk, porcelain, and tea reaching the Middle East and Europe in exchange for spices, glass, and precious metals.",
                             locations: [{ name: "Luoyang, China", latitude: 34.6197, longitude: 112.4540 },
                             { name: "Merv (Mary), Turkmenistan (Flourishing trade hub)", latitude: 37.6612, longitude: 62.1793 },
                             { name: "Luoyang, China", latitude: 33.3152, longitude: 44.3661 }
@@ -58,7 +65,7 @@ export default {
                         {
                             title: "The Mongol Empire and the Pax Mongolica (13th-14th Century)",
                             expanded: false,
-                            story: "Story: The Mongols, under Genghis Khan, unified much of Eurasia, creating safe conditions for trade and cultural exchange, allowing Marco Polo and others to travel across the Silk Road.",
+                            story: "The Mongols, under Genghis Khan, unified much of Eurasia, creating safe conditions for trade and cultural exchange, allowing Marco Polo and others to travel across the Silk Road.",
                             locations: [{ name: "Karakorum, Mongolia (Mongol capital and trade hub)", latitude: 47.1975, longitude: 102.8425 },
                             { name: "Venice, Italy (Marco Polo’s home and a key European trade city)", latitude: 45.4408, longitude: 12.3155 }
                             ]
@@ -66,7 +73,7 @@ export default {
                     ]
                 },
                 {
-                    title: "Operation Barbarossa (Unternehmen Barbarossa)",
+                    title: "Operation Barbarossa (Unternehmen Barbarossa 巴巴罗萨行动)",
                     expanded: false,
                     points: [
                         {
@@ -100,7 +107,7 @@ export default {
                 }
                 ,
                 {
-                    title: "Royal tours of Australia (Queen Elizabeth II’s Historic 1954 Visit)",
+                    title: "Royal tours of Australia (Queen Elizabeth II’s Historic 1954 Visit 伊丽莎白访问澳大利亚)",
                     expanded: false,
                     points: [
                         {
@@ -137,7 +144,7 @@ export default {
                 }
                 ,
                 {
-                    title: "Mission: Impossible – Dead Reckoning Part One (Ethan Hunt’s Movement)",
+                    title: "Mission: Impossible – Dead Reckoning Part One (Ethan Hunt’s Movement 碟中谍7行动路线)",
                     expanded: false,
                     points: [
                         {
@@ -230,42 +237,126 @@ export default {
 </script>
 
 <style scoped>
+/* Fancy Styling */
 .stories-container {
-    max-width: 800px;
+    max-width: 900px;
     margin: auto;
     padding: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+.title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    color: #000000;
+    margin-bottom: 20px;
 }
 
 .story {
-    border-bottom: 2px solid #ddd;
-    padding: 10px 0;
+    background: #f8f9fa;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+}
+
+.story:hover {
+    transform: scale(1.02);
+}
+
+.story-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.story-header:hover {
+    background: #0056b3;
 }
 
 .story-title {
-    cursor: pointer;
-    color: #007bff;
-    transition: 0.3s;
+    font-size: 22px;
+    font-weight: bold;
 }
 
-.story-title:hover {
-    text-decoration: underline;
+.toggle-icon {
+    font-size: 18px;
+}
+
+.story-content {
+    background: white;
+    padding: 15px;
+    border-top: 2px solid #007bff;
 }
 
 .story-point {
-    margin-left: 20px;
-}
-
-.story-point-title {
-    cursor: pointer;
-    color: #17a2b8;
+    background: #e9ecef;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
     transition: 0.3s;
 }
 
-.story-point-title:hover {
-    text-decoration: underline;
+.story-point:hover {
+    background: #dee2e6;
+}
+
+.story-point-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.story-point-title {
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .story-details {
-    margin-left: 40px;
+    background: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 5px;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+li {
+    list-style: none;
+    margin-bottom: 5px;
+}
+
+/* Smooth Animations */
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
+}
+
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+    transition: max-height 0.5s ease-out, opacity 0.5s ease-in-out;
+    overflow: hidden;
+}
+
+.slide-enter,
+.slide-leave-to {
+    max-height: 0;
+    opacity: 0;
 }
 </style>
