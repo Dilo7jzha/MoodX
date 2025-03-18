@@ -1,6 +1,6 @@
 <template>
     <div class="stories-container">
-        <h1>Stories</h1>
+        <h1> D'Angelo's User Testing Stories</h1>
         <div v-for="(story, storyIndex) in stories" :key="storyIndex" class="story">
             <h2 @click="toggleStory(storyIndex)" class="story-title">
                 {{ story.title }}
