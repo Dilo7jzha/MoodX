@@ -39,6 +39,8 @@ const logout = () => {
               involved</router-link></li>
           <li class="nav-item"><router-link to="/aboutUs" class="nav-link" aria-label="About us">About us</router-link>
           </li>
+          <li class="nav-item"><router-link to="/stories" class="nav-link" aria-label="Stories">Stories</router-link>
+          </li>
           <li class="nav-item" v-if="(role === 'admin')"><router-link to="/adminDashboard" class="nav-link"
               aria-label="Admin dashboard">Admin
               dashboard</router-link></li>

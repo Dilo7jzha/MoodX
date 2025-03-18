@@ -13,6 +13,7 @@ import FeelingStressedView from '../views/resources/FeelingStressedView.vue'
 import FeelingLowView from '../views/resources/FeelingLowView.vue'
 import ExperiencedTraumaView from '../views/resources/ExperiencedTrauma.vue'
 import TalkToChatbotView from '../views/TalkToChatbotView.vue'
+import Stories from '../views/Stories.vue';
 
 import {ref} from 'vue'
 
@@ -90,6 +91,9 @@ const routes = [
     name: 'Experienced Trauma',
     component: ExperiencedTraumaView
   },
+  { path: '/stories', 
+    component: Stories 
+  }
 ]
 
 const router = createRouter({
